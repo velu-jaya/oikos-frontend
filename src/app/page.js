@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Hero from "../components/Hero";
 import SearchBar from "../components/SearchBar";
 import FeaturedProperties from "../components/FeaturedProperties";
+import Testimonials from "../components/Testimonials";
 import Plans from "../components/Plans";
 import Footer from "../components/Footer";
 import sampleProperties from "../data/properties";
@@ -17,6 +18,7 @@ export default function Home() {
         <Hero />
         <SearchBar />
         <FeaturedProperties properties={sampleProperties} />
+        <Testimonials />
         <Plans />
       </main>
 
