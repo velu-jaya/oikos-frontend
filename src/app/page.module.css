@@ -160,7 +160,7 @@ a.secondary {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 24px;
+  padding: 5px 24px;
   border-bottom: 1px solid rgba(0,0,0,0.06);
   position: sticky;
   top: 0;
@@ -310,6 +310,7 @@ a.secondary {
 .propCard{ border-radius: 10px; overflow: hidden; background: var(--surface); box-shadow: 0 8px 24px rgba(0,0,0,0.06); display:flex; flex-direction: column; }
 .propCard:hover{ transform: translateY(-6px); transition: transform 200ms ease, box-shadow 200ms ease; box-shadow: 0 20px 44px rgba(0,0,0,0.12) }
 .propImage{ width:100%; height: 180px; overflow:hidden; position: relative }
+.propImage img{ width:100%; height:100%; object-fit: cover; display:block; transition: transform 200ms ease; }
 .scrolled{ box-shadow: 0 6px 24px rgba(0,0,0,0.08) }
 .priceBadge{ position: absolute; right: 12px; top: 12px; background: var(--primary); color:#fff; padding:8px 12px; border-radius:6px; font-weight:700 }
 .featureTag{ position: absolute; left: 12px; top: 12px; background: var(--accent); color:#fff; padding:6px 10px; border-radius:6px; font-weight:700; font-size:12px }
@@ -356,12 +357,6 @@ a.secondary {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(84, 144, 128, 0.05) 0%,
-    rgba(250, 156, 70, 0.08) 50%,
-    rgba(255, 255, 255, 0.9) 100%
-  );
   z-index: 0;
 }
 
