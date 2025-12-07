@@ -1,5 +1,6 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import ChatAssistant from "../components/ChatAssistant";
 
 const poppins = Poppins({
   variable: "--font-base",
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${poppins.variable}`}>
         {children}
+        <ChatAssistant />
       </body>
     </html>
   );
