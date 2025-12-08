@@ -9,6 +9,7 @@ export default function LoginModal({ isOpen, onClose }) {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [agreeToTerms, setAgreeToTerms] = useState(false);
 
   // Prevent body scroll when modal is open
   useEffect(() => {
@@ -25,6 +26,12 @@ export default function LoginModal({ isOpen, onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    
+    if (!agreeToTerms) {
+      setError('You must agree to the Terms and User Agreement to continue.');
+      return;
+    }
+    
     setIsLoading(true);
 
     try {
@@ -47,6 +54,7 @@ export default function LoginModal({ isOpen, onClose }) {
       // Reset form and close modal
       setEmail('');
       setPassword('');
+      setAgreeToTerms(false);
       onClose();
     } catch (err) {
       setError(err.message);
@@ -117,10 +125,33 @@ export default function LoginModal({ isOpen, onClose }) {
             </a>
           </div>
 
+          <div className={styles.termsWrapper}>
+            <label htmlFor="terms" className={styles.termsLabel}>
+              <input
+                type="checkbox"
+                id="terms"
+                className={styles.termsCheckbox}
+                checked={agreeToTerms}
+                onChange={(e) => setAgreeToTerms(e.target.checked)}
+                disabled={isLoading}
+              />
+              <span>
+                By continuing you agree to Oikos's{' '}
+                <a href="/terms" className={styles.termsLink}>
+                  Terms and Conditions
+                </a>
+                {' '}and{' '}
+                <a href="/privacy" className={styles.termsLink}>
+                  Privacy Policy
+                </a>
+              </span>
+            </label>
+          </div>
+
           <button
             type="submit"
             className={styles.loginButton}
-            disabled={isLoading}
+            disabled={isLoading || !agreeToTerms}
           >
             {isLoading ? 'Logging in...' : 'Login'}
           </button>

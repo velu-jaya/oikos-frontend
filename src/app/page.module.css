@@ -141,18 +141,6 @@ a.secondary {
   .logo {
     filter: invert();
   }
-
-  .page {
-    --background: #000;
-    --foreground: #000;
-
-    --text-primary: #ededed;
-    --text-secondary: #999;
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
-  }
 }
 
 /* Header */
@@ -652,7 +640,14 @@ a.secondary {
 
 /* Footer */
 .footer{ border-top: 1px solid var(--surface-muted); padding: 18px 24px; background: var(--surface); }
-.footerInner{ max-width: 1400px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; }
+.footerInner{ max-width: 1400px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap: 24px; }
+.footerLeft{ display: flex; flex-direction: column; gap: 8px; }
+.brandFooter{ margin-bottom: 8px; }
+.footerCenter{ display: flex; justify-content: center; flex: 1; }
+.footerLinks{ display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; }
+.footerLink{ font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s ease; }
+.footerLink:hover{ color: var(--foreground); }
+.footerRight{ display: flex; align-items: center; }
 .socials{ display:flex; gap:12px; }
 .socialIcon{ font-size: 18px; padding:8px; border-radius: 8px; border: 1px solid var(--surface-muted); }
 
@@ -670,5 +665,8 @@ a.secondary {
   .testimonialsHeader h2{ font-size: 28px; }
   .testimonialsCarousel{ gap: 18px; }
   .testimonialCard{ flex: 0 0 280px; min-width: 280px; padding: 24px; }
+  .footerInner{ flex-direction: column; gap: 16px; }
+  .footerCenter{ flex: 1; }
+  .footerLinks{ gap: 16px; font-size: 12px; }
 }
 

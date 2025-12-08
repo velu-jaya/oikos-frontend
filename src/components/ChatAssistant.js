@@ -27,6 +27,17 @@ const questionGroups = [
     ]
   },
   {
+    id: "agent",
+    label: "Agent",
+    description: "Support for agents handling both buying and selling.",
+    questions: [
+      "How do I list a property for sale?",
+      "Can I help my clients find properties to buy?",
+      "What tools are available for agents?",
+      "How do I manage multiple transactions?"
+    ]
+  },
+  {
     id: "vendor",
     label: "Vendor",
     description: "Information for service partners and vendors.",

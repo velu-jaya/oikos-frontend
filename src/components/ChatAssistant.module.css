@@ -2,7 +2,7 @@
   position: fixed;
   right: 1.5rem;
   bottom: 1.5rem;
-  z-index: 40;
+  z-index: 99;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -27,6 +27,26 @@
   gap: 1rem;
   padding: 1.25rem 1.5rem 1rem;
   border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.headerContent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.headerIconBadge {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.headerIcon {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
 }
 
 .title {

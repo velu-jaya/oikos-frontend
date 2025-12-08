@@ -156,9 +156,56 @@
   text-decoration: underline;
 }
 
+.termsWrapper {
+  margin: 15px 0 20px 0;
+}
+
+.termsLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.termsCheckbox {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  min-height: 18px;
+  margin-top: 2px;
+  cursor: pointer;
+  accent-color: #fa9c46;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.termsCheckbox:checked {
+  background-color: #fa9c46;
+  border-color: #fa9c46;
+}
+
+.termsCheckbox:focus {
+  outline: 2px solid #fa9c46;
+  outline-offset: 2px;
+}
+
+.termsLink {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.termsLink:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
 .loginButton {
   padding: 12px 16px;
-  background-color: #007bff;
+  background-color: #fa9c46;
   color: white;
   border: none;
   border-radius: 8px;
@@ -167,10 +214,11 @@
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.1s ease;
   margin-top: 10px;
+  width: 100%;
 }
 
 .loginButton:hover:not(:disabled) {
-  background-color: #0056b3;
+  background-color: #f08a2e;
   transform: translateY(-2px);
 }
 
@@ -210,6 +258,6 @@
 }
 
 .link:hover {
-  color: #0056b3;
+  color: #f08a2e;
   text-decoration: underline;
 }
