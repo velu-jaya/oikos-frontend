@@ -23,7 +23,7 @@ export default function Header() {
       </div>
       <nav className={styles.nav}>
         <ul>
-          <li><a href="#">Buyer</a></li>
+          <li><a href="/buyer">Buyer</a></li>
           <li><a href="#">Seller</a></li>
           <li><a href="#">Vendor</a></li>
           <li><a href="#">Agent</a></li>

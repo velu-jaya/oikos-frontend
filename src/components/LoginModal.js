@@ -64,7 +64,7 @@ export default function LoginModal({ isOpen, onClose }) {
           ✕
         </button>
 
-        <h2 className={styles.title}>Login</h2>
+        <h2 className={styles.title}>Welcome back</h2>
 
         <form onSubmit={handleSubmit} className={styles.form}>
           {error && <div className={styles.error}>{error}</div>}
