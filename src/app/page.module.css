@@ -303,7 +303,9 @@ a.secondary {
 .priceBadge{ position: absolute; right: 12px; top: 12px; background: var(--primary); color:#fff; padding:8px 12px; border-radius:6px; font-weight:700 }
 .featureTag{ position: absolute; left: 12px; top: 12px; background: var(--accent); color:#fff; padding:6px 10px; border-radius:6px; font-weight:700; font-size:12px }
 .propBody{ padding: 12px }
-.propMeta{ color: var(--muted); font-size:13px; display:flex; gap:8px; margin-top: 6px }
+.propMeta{ color: var(--muted); font-size:13px; display:flex; gap:12px; margin-top: 8px; flex-wrap: wrap }
+.metaItem{ display:flex; align-items:center; gap:4px; white-space:nowrap }
+.metaIcon{ font-size:14px; display:inline-flex; align-items:center; justify-content:center }
 .propCity{ color: var(--muted); font-size:13px }
 .propFooter{ display:flex; justify-content:space-between; align-items:center; margin-top: 12px }
 .price{ font-weight:700 }

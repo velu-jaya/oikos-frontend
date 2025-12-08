@@ -59,12 +59,6 @@ export default function PropertyListingPage() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.headerSection}>
-        <div className={styles.searchSection}>
-          <SearchBar onSearch={handleSearch} />
-        </div>
-      </div>
-
       <div className={styles.mainContent}>
         <div className={styles.mapSection}>
           <MapView

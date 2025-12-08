@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import styles from "../app/page.module.css";
 
 export default function PropertyCard({ property }) {
@@ -13,13 +14,22 @@ export default function PropertyCard({ property }) {
         <h3>{property.title}</h3>
         <p className={styles.propCity}>{property.city}</p>
         <div className={styles.propMeta}>
-          <span>{property.beds} beds</span>
-          <span>{property.baths} baths</span>
-          <span>{property.area} sqft</span>
+          <span className={styles.metaItem}>
+            <span className={styles.metaIcon}><i className="fas fa-bed"></i></span>
+            {property.beds} beds
+          </span>
+          <span className={styles.metaItem}>
+            <span className={styles.metaIcon}><i className="fas fa-bath"></i></span>
+            {property.baths} baths
+          </span>
+          <span className={styles.metaItem}>
+            <span className={styles.metaIcon}><i className="fas fa-ruler"></i></span>
+            {property.area} sqft
+          </span>
         </div>
         <div className={styles.propFooter}>
           <div className={styles.price}>{property.price}</div>
-          <a className={styles.btnLink} href="#">View Details</a>
+          <Link className={styles.btnLink} href={`/property/${property.id}`}>View Details</Link>
         </div>
       </div>
     </article>
