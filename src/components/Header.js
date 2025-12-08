@@ -7,7 +7,7 @@ import { useAuth } from "../context/AuthContext";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
-  const { setLoginModalOpen } = useAuth();
+  const { setLoginModalOpen, setRegisterModalOpen } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -37,7 +37,13 @@ export default function Header() {
         >
           Login
         </button>
-        <a className={styles.register} href="#">Register</a>
+        <button 
+          className={styles.register} 
+          onClick={() => setRegisterModalOpen(true)}
+          style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+        >
+          Register
+        </button>
       </div>
     </header>
   );

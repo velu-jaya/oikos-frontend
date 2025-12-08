@@ -6,9 +6,18 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [registerModalOpen, setRegisterModalOpen] = useState(false);
+  const [verificationModalOpen, setVerificationModalOpen] = useState(false);
 
   return (
-    <AuthContext.Provider value={{ loginModalOpen, setLoginModalOpen }}>
+    <AuthContext.Provider value={{ 
+      loginModalOpen, 
+      setLoginModalOpen,
+      registerModalOpen,
+      setRegisterModalOpen,
+      verificationModalOpen,
+      setVerificationModalOpen
+    }}>
       {children}
     </AuthContext.Provider>
   );

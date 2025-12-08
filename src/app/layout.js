@@ -3,6 +3,8 @@ import "./globals.css";
 import ChatAssistant from "../components/ChatAssistant";
 import { AuthProvider } from "../context/AuthContext";
 import LoginModalContainer from "../components/LoginModalContainer";
+import RegisterModalContainer from "../components/RegisterModalContainer";
+import VerificationModalContainer from "../components/VerificationModalContainer";
 
 const poppins = Poppins({
   variable: "--font-base",
@@ -22,6 +24,8 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           {children}
           <LoginModalContainer />
+          <RegisterModalContainer />
+          <VerificationModalContainer />
           <ChatAssistant />
         </AuthProvider>
       </body>

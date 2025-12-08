@@ -1,0 +1,565 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-in-out;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modalContent {
+  background-color: white;
+  border-radius: 16px;
+  padding: 40px;
+  width: 100%;
+  max-width: 450px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  position: relative;
+  animation: slideUp 0.3s ease-in-out;
+  flex-shrink: 0;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Progress Steps */
+.progressContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.progressStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex: 1;
+}
+
+.stepCircle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  border: 2px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #999;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.progressStep.active .stepCircle {
+  background-color: #fa9c46;
+  border-color: #fa9c46;
+  color: white;
+}
+
+.progressStep.completed .stepCircle {
+  background-color: #549080;
+  border-color: #549080;
+  color: white;
+}
+
+.stepLine {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background-color: #ddd;
+  z-index: 1;
+}
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #999;
+  transition: color 0.2s ease;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.closeButton:hover {
+  color: #333;
+  background-color: #f0f0f0;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #1a1a1a;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 30px 0;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.input,
+.select {
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: inherit;
+  background-color: #fff;
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: #fa9c46;
+  box-shadow: 0 0 0 3px rgba(250, 156, 70, 0.1);
+}
+
+.input:disabled,
+.select:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.select {
+  cursor: pointer;
+}
+
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordWrapper .input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.togglePassword {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #999;
+  padding: 5px;
+  transition: color 0.2s ease;
+}
+
+.togglePassword:hover {
+  color: #333;
+}
+
+.togglePassword:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.termsWrapper {
+  margin: 15px 0 20px 0;
+}
+
+.termsLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.termsCheckbox {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  min-height: 18px;
+  margin-top: 2px;
+  cursor: pointer;
+  accent-color: #fa9c46;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.termsCheckbox:checked {
+  background-color: #fa9c46;
+  border-color: #fa9c46;
+}
+
+.termsCheckbox:focus {
+  outline: 2px solid #fa9c46;
+  outline-offset: 2px;
+}
+
+.termsLink {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.termsLink:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.userTypeGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.userTypeButton {
+  padding: 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.userTypeButton:hover {
+  border-color: #fa9c46;
+  background-color: #fff;
+}
+
+.userTypeButton.selected {
+  border-color: #fa9c46;
+  background-color: #fff5f0;
+}
+
+.userTypeButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.typeIcon {
+  font-size: 24px;
+}
+
+.typeLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+.buttonGroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.backButton {
+  padding: 12px 16px;
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.backButton:hover:not(:disabled) {
+  background-color: #e0e0e0;
+}
+
+.backButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  border: 1px solid #f5c6cb;
+  margin-bottom: 5px;
+}
+
+.submitButton {
+  padding: 12px 16px;
+  background-color: #fa9c46;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  width: 100%;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: #f08a2e;
+  transform: translateY(-2px);
+}
+
+.submitButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submitButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.loginLink {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.link {
+  color: #fa9c46;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: #f08a2e;
+  text-decoration: underline;
+}
+
+/* Verification Styles */
+.verificationHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.verificationIcon {
+  font-size: 48px;
+  animation: bounce 0.6s ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.codeInput {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 8px;
+  padding: 16px 14px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-family: 'Courier New', monospace;
+  transition: border-color 0.2s ease;
+}
+
+.codeInput:focus {
+  outline: none;
+  border-color: #fa9c46;
+  box-shadow: 0 0 0 3px rgba(250, 156, 70, 0.1);
+}
+
+.codeInput::placeholder {
+  opacity: 0.3;
+  letter-spacing: 8px;
+}
+
+.resendWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.resendText {
+  font-size: 13px;
+  color: #999;
+  margin: 0;
+}
+
+.resendButton {
+  background: none;
+  border: none;
+  color: #fa9c46;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  padding: 0;
+  text-decoration: none;
+}
+
+.resendButton:hover {
+  color: #f08a2e;
+  text-decoration: underline;
+}
+
+.resendButton:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Success Screen */
+.successContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.successIcon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #fa9c46, #f08a2e);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: white;
+  animation: scaleIn 0.5s ease-in-out;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.successMessage {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .modalContent {
+    padding: 30px 20px;
+    max-width: calc(100vw - 40px);
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+
+  .verificationIcon {
+    font-size: 40px;
+  }
+
+  .successIcon {
+    width: 70px;
+    height: 70px;
+    font-size: 40px;
+  }
+
+  .codeInput {
+    font-size: 24px;
+    letter-spacing: 4px;
+  }
+
+  .closeButton {
+    font-size: 24px;
+  }
+}
