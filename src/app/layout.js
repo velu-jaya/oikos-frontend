@@ -1,6 +1,8 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import ChatAssistant from "../components/ChatAssistant";
+import { AuthProvider } from "../context/AuthContext";
+import LoginModalContainer from "../components/LoginModalContainer";
 
 const poppins = Poppins({
   variable: "--font-base",
@@ -17,8 +19,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${poppins.variable}`}>
-        {children}
-        <ChatAssistant />
+        <AuthProvider>
+          {children}
+          <LoginModalContainer />
+          <ChatAssistant />
+        </AuthProvider>
       </body>
     </html>
   );

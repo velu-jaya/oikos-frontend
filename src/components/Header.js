@@ -3,9 +3,11 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import styles from "../app/page.module.css";
+import { useAuth } from "../context/AuthContext";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const { setLoginModalOpen } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -28,7 +30,13 @@ export default function Header() {
         </ul>
       </nav>
       <div className={styles.actions}>
-        <a className={styles.login} href="#">Login</a>
+        <button 
+          className={styles.login} 
+          onClick={() => setLoginModalOpen(true)}
+          style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+        >
+          Login
+        </button>
         <a className={styles.register} href="#">Register</a>
       </div>
     </header>
