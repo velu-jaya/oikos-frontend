@@ -1,38 +1,78 @@
 import Image from "next/image";
-import styles from "../app/page.module.css";
+import styles from "./Footer.module.css";
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className={styles.footer}>
-      <div className={styles.footerInner}>
-        <div className={styles.footerLeft}>
-          <div className={styles.brandFooter}>
-            <Image src="/logo.svg" width={120} height={36} alt="Oikos" />
+      <div className={styles.footerContainer}>
+        {/* Brand Section */}
+        <div className={styles.brandSection}>
+          <div className={styles.brandLogo}>
+            <div className={styles.logoIcon}>
+              <i className="fa-solid fa-building"></i>
+            </div>
+            <h2 className={styles.brandName}>Oikos</h2>
           </div>
-          <small>© {new Date().getFullYear()} Oikos. All rights reserved.</small>
-        </div>
-        <div className={styles.footerCenter}>
-          <nav className={styles.footerLinks}>
-            <a href="/terms" className={styles.footerLink}>Terms and Conditions</a>
-            <a href="/privacy" className={styles.footerLink}>Privacy Policy</a>
-            <a href="/cookies" className={styles.footerLink}>Cookie Policy</a>
-            <a href="/contact" className={styles.footerLink}>Contact Us</a>
-            <a href="/help" className={styles.footerLink}>Help Center</a>
-          </nav>
-        </div>
-        <div className={styles.footerRight}>
-          <div className={styles.socials}>
-            <a aria-label="twitter" href="#" className={styles.socialIcon}>
-              <Image src="/icons/twitter.svg" width={20} height={20} alt="Twitter" />
+          <p className={styles.brandDescription}>
+            Your trusted platform for buying, selling, and finding property services.
+          </p>
+          <div className={styles.socialLinks}>
+            <a href="#" className={styles.socialLink} title="Facebook">
+              <i className="fa-brands fa-facebook"></i>
             </a>
-            <a aria-label="facebook" href="#" className={styles.socialIcon}>
-              <Image src="/icons/facebook.svg" width={20} height={20} alt="Facebook" />
+            <a href="#" className={styles.socialLink} title="Twitter">
+              <i className="fa-brands fa-twitter"></i>
             </a>
-            <a aria-label="instagram" href="#" className={styles.socialIcon}>
-              <Image src="/icons/instagram.svg" width={20} height={20} alt="Instagram" />
+            <a href="#" className={styles.socialLink} title="Instagram">
+              <i className="fa-brands fa-instagram"></i>
+            </a>
+            <a href="#" className={styles.socialLink} title="LinkedIn">
+              <i className="fa-brands fa-linkedin"></i>
             </a>
           </div>
         </div>
+
+        {/* Quick Links Section */}
+        <div className={styles.linksSection}>
+          <h3 className={styles.sectionTitle}>Quick Links</h3>
+          <ul className={styles.linksList}>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/properties">Properties</a></li>
+            <li><a href="/vendors">Vendors</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </div>
+
+        {/* Services Section */}
+        <div className={styles.linksSection}>
+          <h3 className={styles.sectionTitle}>Services</h3>
+          <ul className={styles.linksList}>
+            <li><a href="/buy">Buy Property</a></li>
+            <li><a href="/sell">Sell Property</a></li>
+            <li><a href="/vendors">Find Vendors</a></li>
+            <li><a href="/ai-assistance">AI Assistance</a></li>
+          </ul>
+        </div>
+
+        {/* Contact Section */}
+        <div className={styles.contactSection}>
+          <h3 className={styles.sectionTitle}>Contact</h3>
+          <div className={styles.contactInfo}>
+            <p><strong>Address:</strong><br />123 Real Estate Ave<br />New York, NY 10001</p>
+            <p><strong>Phone:</strong> <a href="tel:+15551234567">(555) 123-4567</a></p>
+            <p><strong>Email:</strong> <a href="mailto:info@oikos.com">info@oikos.com</a></p>
+          </div>
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div className={styles.divider}></div>
+
+      {/* Copyright */}
+      <div className={styles.copyright}>
+        <p>&copy; {currentYear} Oikos. All rights reserved.</p>
       </div>
     </footer>
   );

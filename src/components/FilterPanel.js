@@ -6,16 +6,46 @@ import styles from './FilterPanel.module.css';
 export default function FilterPanel({ isOpen, onClose, onFilterChange, filters }) {
   const [localFilters, setLocalFilters] = useState(filters);
 
+  const propertyTypes = [
+    'All Types',
+    'Apartment',
+    'House',
+    'Villa',
+    'Condo',
+    'Townhouse',
+    'Land',
+    'Commercial'
+  ];
+
+  const locations = [
+    'All Locations',
+    'New York',
+    'Los Angeles',
+    'Chicago',
+    'Houston',
+    'Phoenix',
+    'Philadelphia',
+    'San Antonio'
+  ];
+
   const handleFilterChange = (filterName, value) => {
     const updated = { ...localFilters, [filterName]: value };
     setLocalFilters(updated);
     onFilterChange(updated);
   };
 
+  const handlePriceChange = (e) => {
+    const updated = { ...localFilters, maxPrice: parseInt(e.target.value) };
+    setLocalFilters(updated);
+    onFilterChange(updated);
+  };
+
   const handleReset = () => {
     const resetFilters = {
+      propertyType: 'All Types',
+      location: 'All Locations',
       minPrice: 0,
-      maxPrice: 2500000,
+      maxPrice: 2000000,
       beds: 0,
       baths: 0,
     };
@@ -40,45 +70,50 @@ export default function FilterPanel({ isOpen, onClose, onFilterChange, filters }
         </div>
 
         <div className={styles.panelContent}>
-          {/* Price Range */}
+          {/* Property Type */}
           <div className={styles.filterGroup}>
-            <label className={styles.groupLabel}>Price Range</label>
-            <div className={styles.priceInputs}>
-              <div className={styles.inputWrapper}>
-                <label>Min Price</label>
-                <input
-                  type="number"
-                  min="0"
-                  value={localFilters.minPrice}
-                  onChange={(e) =>
-                    handleFilterChange('minPrice', parseInt(e.target.value) || 0)
-                  }
-                  placeholder="$0"
-                />
-              </div>
-              <div className={styles.inputWrapper}>
-                <label>Max Price</label>
-                <input
-                  type="number"
-                  min="0"
-                  value={localFilters.maxPrice}
-                  onChange={(e) =>
-                    handleFilterChange('maxPrice', parseInt(e.target.value) || 0)
-                  }
-                  placeholder="$2,000,000"
-                />
-              </div>
-            </div>
+            <label className={styles.groupLabel}>Property Type</label>
+            <select
+              value={localFilters.propertyType || 'All Types'}
+              onChange={(e) =>
+                handleFilterChange('propertyType', e.target.value)
+              }
+              className={styles.select}
+            >
+              {propertyTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Price Range with Slider */}
+          <div className={styles.filterGroup}>
+            <label className={styles.groupLabel}>
+              Price Range: ${(localFilters.minPrice || 0).toLocaleString()} - ${(localFilters.maxPrice || 2000000).toLocaleString()}
+            </label>
+            <input
+              type="range"
+              min="0"
+              max="2000000"
+              step="50000"
+              value={localFilters.maxPrice || 2000000}
+              onChange={handlePriceChange}
+              className={styles.slider}
+            />
+            <div className={styles.sliderTrack}></div>
           </div>
 
           {/* Bedrooms */}
           <div className={styles.filterGroup}>
             <label className={styles.groupLabel}>Bedrooms</label>
             <select
-              value={localFilters.beds}
+              value={localFilters.beds || 0}
               onChange={(e) =>
                 handleFilterChange('beds', parseInt(e.target.value))
               }
+              className={styles.select}
             >
               <option value="0">Any</option>
               <option value="1">1+</option>
@@ -93,10 +128,11 @@ export default function FilterPanel({ isOpen, onClose, onFilterChange, filters }
           <div className={styles.filterGroup}>
             <label className={styles.groupLabel}>Bathrooms</label>
             <select
-              value={localFilters.baths}
+              value={localFilters.baths || 0}
               onChange={(e) =>
                 handleFilterChange('baths', parseInt(e.target.value))
               }
+              className={styles.select}
             >
               <option value="0">Any</option>
               <option value="1">1+</option>
@@ -105,16 +141,32 @@ export default function FilterPanel({ isOpen, onClose, onFilterChange, filters }
               <option value="4">4+</option>
             </select>
           </div>
+
+          {/* Location */}
+          <div className={styles.filterGroup}>
+            <label className={styles.groupLabel}>Location</label>
+            <select
+              value={localFilters.location || 'All Locations'}
+              onChange={(e) =>
+                handleFilterChange('location', e.target.value)
+              }
+              className={styles.select}
+            >
+              {locations.map((location) => (
+                <option key={location} value={location}>
+                  {location}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div className={styles.panelFooter}>
-          <button className={styles.resetButton} onClick={handleReset}>
-            <i className="fa-solid fa-rotate-left"></i>
-            Reset Filters
-          </button>
           <button className={styles.applyButton} onClick={onClose}>
-            <i className="fa-solid fa-check"></i>
-            Apply
+            Apply Filters
+          </button>
+          <button className={styles.resetButton} onClick={handleReset}>
+            Reset All
           </button>
         </div>
       </div>

@@ -1,0 +1,254 @@
+.footer {
+  background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%);
+  color: #e0e0e0;
+  padding: 60px 20px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footerContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+/* Brand Section */
+.brandSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.brandLogo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logoIcon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #549080 0%, #4a7a6f 100%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.logoIcon i {
+  font-size: 28px;
+  color: white;
+}
+
+.brandName {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(135deg, #549080 0%, #7cb8a8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.brandDescription {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #a0a0a0;
+  margin: 8px 0 0;
+  max-width: 300px;
+}
+
+.socialLinks {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.socialLink {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: rgba(84, 144, 128, 0.1);
+  color: #549080;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(84, 144, 128, 0.2);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.socialLink:hover {
+  background: rgba(84, 144, 128, 0.2);
+  color: #7cb8a8;
+  border-color: rgba(84, 144, 128, 0.4);
+  transform: translateY(-2px);
+}
+
+.socialLink i {
+  font-size: 18px;
+}
+
+/* Links Sections */
+.linksSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+}
+
+.linksList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.linksList li a {
+  color: #a0a0a0;
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.linksList li a:hover {
+  color: #549080;
+  transform: translateX(4px);
+}
+
+/* Contact Section */
+.contactSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contactInfo p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #a0a0a0;
+}
+
+.contactInfo strong {
+  color: white;
+  font-weight: 600;
+}
+
+.contactInfo a {
+  color: #549080;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contactInfo a:hover {
+  color: #7cb8a8;
+  text-decoration: underline;
+}
+
+/* Divider */
+.divider {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+/* Copyright */
+.copyright {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 20px;
+  text-align: center;
+}
+
+.copyright p {
+  font-size: 13px;
+  color: #808080;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer {
+    padding: 40px 16px 16px;
+  }
+
+  .footerContainer {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .brandName {
+    font-size: 24px;
+  }
+
+  .sectionTitle {
+    font-size: 14px;
+  }
+
+  .linksList li a,
+  .contactInfo p {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 32px 12px 12px;
+  }
+
+  .footerContainer {
+    gap: 24px;
+  }
+
+  .brandLogo {
+    gap: 10px;
+  }
+
+  .logoIcon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .logoIcon i {
+    font-size: 24px;
+  }
+
+  .brandName {
+    font-size: 20px;
+  }
+
+  .socialLinks {
+    gap: 8px;
+  }
+
+  .socialLink {
+    width: 36px;
+    height: 36px;
+  }
+
+  .sectionTitle {
+    font-size: 13px;
+  }
+}
