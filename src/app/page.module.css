@@ -252,6 +252,112 @@ a.secondary {
 .ctaPrimary:hover{ background: #f08a2e; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(250, 156, 70, 0.3); }
 .ctaOutlined{ border: 2px solid #fff; color: #fff; padding: 12px 30px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 200ms ease; text-decoration: none; display: inline-block; font-size: 16px; }
 .ctaOutlined:hover{ background: rgba(255, 255, 255, 0.1); }
+.ctaSecondary{ border: 2px solid #fff; color: #fff; padding: 12px 30px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 200ms ease; text-decoration: none; display: inline-block; font-size: 16px; }
+.ctaSecondary:hover{ background: rgba(255, 255, 255, 0.1); }
+
+/* Hero Search Box */
+.heroSearchBox {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.searchForm {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 600px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.toggleGroup {
+  display: flex;
+  gap: 8px;
+  background: #f0f0f0;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.toggleBtn {
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  color: #666;
+  border-radius: 6px;
+  transition: all 200ms ease;
+}
+
+.toggleBtn.active {
+  background: var(--accent);
+  color: white;
+}
+
+.toggleBtn:hover:not(.active) {
+  color: var(--foreground);
+}
+
+.locationInput {
+  padding: 10px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  flex: 1;
+  min-width: 180px;
+  font-family: inherit;
+  transition: all 200ms ease;
+}
+
+.locationInput:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(250, 156, 70, 0.1);
+}
+
+.locationInput::placeholder {
+  color: #999;
+}
+
+.searchBtn {
+  padding: 10px 24px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.searchBtn:hover {
+  background: #4a7a6f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(84, 144, 128, 0.3);
+}
+
+.heroMessage {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 16px;
+  margin: 0;
+  text-align: center;
+}
+
+.heroCTAs {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
 .heroStats{
   display: flex;
@@ -670,5 +776,45 @@ a.secondary {
   .footerInner{ flex-direction: column; gap: 16px; }
   .footerCenter{ flex: 1; }
   .footerLinks{ gap: 16px; font-size: 12px; }
+
+  /* Hero responsive */
+  .heroTitle {
+    font-size: 32px;
+    min-height: 60px;
+  }
+
+  .searchForm {
+    flex-direction: column;
+    width: 90%;
+    max-width: 100%;
+  }
+
+  .toggleGroup {
+    width: 100%;
+  }
+
+  .locationInput {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .searchBtn {
+    width: 100%;
+  }
+
+  .heroMessage {
+    font-size: 14px;
+  }
+
+  .heroCTAs {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ctaPrimary,
+  .ctaSecondary {
+    width: 100%;
+    text-align: center;
+  }
 }
 
