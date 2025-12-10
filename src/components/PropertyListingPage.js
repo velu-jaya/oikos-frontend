@@ -81,75 +81,7 @@ export default function PropertyListingPage() {
               Results
               <span className={styles.count}>{filteredProperties.length}</span>
             </h2>
-            <div className={styles.filterPanel}>
-              <div className={styles.filterGroup}>
-                <label>Min Price</label>
-                <input
-                  type="number"
-                  min="0"
-                  value={filters.minPrice}
-                  onChange={(e) =>
-                    handleFilterChange({
-                      ...filters,
-                      minPrice: parseInt(e.target.value) || 0,
-                    })
-                  }
-                  placeholder="Min price"
-                />
-              </div>
-              <div className={styles.filterGroup}>
-                <label>Max Price</label>
-                <input
-                  type="number"
-                  min="0"
-                  value={filters.maxPrice}
-                  onChange={(e) =>
-                    handleFilterChange({
-                      ...filters,
-                      maxPrice: parseInt(e.target.value) || 0,
-                    })
-                  }
-                  placeholder="Max price"
-                />
-              </div>
-              <div className={styles.filterGroup}>
-                <label>Bedrooms</label>
-                <select
-                  value={filters.beds}
-                  onChange={(e) =>
-                    handleFilterChange({
-                      ...filters,
-                      beds: parseInt(e.target.value),
-                    })
-                  }
-                >
-                  <option value="0">Any</option>
-                  <option value="1">1+</option>
-                  <option value="2">2+</option>
-                  <option value="3">3+</option>
-                  <option value="4">4+</option>
-                  <option value="5">5+</option>
-                </select>
-              </div>
-              <div className={styles.filterGroup}>
-                <label>Bathrooms</label>
-                <select
-                  value={filters.baths}
-                  onChange={(e) =>
-                    handleFilterChange({
-                      ...filters,
-                      baths: parseInt(e.target.value),
-                    })
-                  }
-                >
-                  <option value="0">Any</option>
-                  <option value="1">1+</option>
-                  <option value="2">2+</option>
-                  <option value="3">3+</option>
-                  <option value="4">4+</option>
-                </select>
-              </div>
-            </div>
+            
           </div>
 
           <div className={styles.propertyList}>
