@@ -5,6 +5,7 @@ import styles from './PropertyListingPage.module.css';
 import PropertyCard from './PropertyCard';
 import MapView from './MapView';
 import SearchBar from './SearchBar';
+import PropertySearchBar from './PropertySearchBar';
 import sampleProperties from '@/data/properties';
 
 export default function PropertyListingPage() {
@@ -58,7 +59,13 @@ export default function PropertyListingPage() {
   };
 
   return (
-    <div className={styles.container}>
+    <>
+      <PropertySearchBar 
+        onSearch={handleSearch} 
+        onFilterChange={handleFilterChange}
+        filters={filters}
+      />
+      <div className={styles.container}>
       <div className={styles.mainContent}>
         <div className={styles.mapSection}>
           <MapView
@@ -168,6 +175,7 @@ export default function PropertyListingPage() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

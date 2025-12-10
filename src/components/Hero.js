@@ -96,7 +96,7 @@ export default function Hero({ children }) {
 
             {/* Message */}
             <p className={styles.heroMessage}>
-              Simplifying property transactions across India
+              Buy, sell, or find trusted vendors for your property needs. Get personalized recommendations powered by AI.
             </p>
 
             {/* CTAs */}
