@@ -2,6 +2,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
+import RoleNavigation from "../components/RoleNavigation";
 import SearchBar from "../components/SearchBar";
 import FeaturedProperties from "../components/FeaturedProperties";
 import Testimonials from "../components/Testimonials";
@@ -16,6 +17,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <Hero />
+        <RoleNavigation />
         <SearchBar />
         <FeaturedProperties properties={sampleProperties} />
         <Testimonials />

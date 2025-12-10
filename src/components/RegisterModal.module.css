@@ -309,6 +309,10 @@
 
 .typeIcon {
   font-size: 24px;
+  color: #549080;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .typeLabel {

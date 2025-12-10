@@ -344,10 +344,10 @@ export default function RegisterModal({ isOpen, onClose }) {
                 <label className={styles.label}>I am a</label>
                 <div className={styles.userTypeGrid}>
                   {[
-                    { value: 'buyer', label: 'Buyer', icon: '🏠' },
-                    { value: 'seller', label: 'Seller', icon: '📋' },
-                    { value: 'agent', label: 'Agent', icon: '👔' },
-                    { value: 'vendor', label: 'Vendor', icon: '🔧' },
+                    { value: 'buyer', label: 'Buyer', icon: 'fa-home' },
+                    { value: 'seller', label: 'Seller', icon: 'fa-clipboard' },
+                    { value: 'agent', label: 'Agent', icon: 'fa-briefcase' },
+                    { value: 'vendor', label: 'Vendor', icon: 'fa-tools' },
                   ].map((type) => (
                     <button
                       key={type.value}
@@ -358,7 +358,7 @@ export default function RegisterModal({ isOpen, onClose }) {
                       onClick={() => setUserType(type.value)}
                       disabled={isLoading}
                     >
-                      <div className={styles.typeIcon}>{type.icon}</div>
+                      <i className={`fa-solid ${type.icon} ${styles.typeIcon}`}></i>
                       <div className={styles.typeLabel}>{type.label}</div>
                     </button>
                   ))}

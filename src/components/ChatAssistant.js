@@ -256,8 +256,7 @@ export default function ChatAssistant() {
         aria-controls={popupId}
         aria-expanded={isOpen}
       >
-        <AiSparkIcon className={styles.toggleIcon} />
-        <span className={styles.toggleLabel}>Chat with Oikos AI</span>
+        <i className={`fa-solid fa-wand-magic-sparkles ${styles.toggleIcon}`}></i>
       </button>
     </div>
   );
