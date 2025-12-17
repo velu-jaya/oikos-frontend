@@ -1,0 +1,380 @@
+.formContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+}
+
+.stepIndicator {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+  gap: 1rem;
+}
+
+.step {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #666;
+  background: #f5f5f5;
+  border: 2px solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.step.active {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+  transform: scale(1.1);
+}
+
+.step.completed {
+  background: #28a745;
+  color: white;
+  border-color: #28a745;
+}
+
+.form {
+  width: 100%;
+}
+
+.stepContent {
+  margin-bottom: 2rem;
+}
+
+.stepContent h2 {
+  color: #333;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 1rem;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  background: white;
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.formGroup textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.error {
+  border-color: #dc3545 !important;
+}
+
+.errorText {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+/* Image Upload Styles */
+.imageUpload {
+  text-align: center;
+}
+
+.uploadArea {
+  margin-bottom: 2rem;
+}
+
+.uploadLabel {
+  display: inline-block;
+  padding: 3rem;
+  border: 2px dashed #667eea;
+  border-radius: 8px;
+  background: #f8f9ff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.uploadLabel:hover {
+  background: #f0f2ff;
+  border-color: #5a6fd8;
+}
+
+.uploadIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.uploadLabel p {
+  margin: 0.5rem 0;
+  font-weight: 600;
+  color: #333;
+}
+
+.uploadLabel small {
+  color: #666;
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.imagePreview {
+  text-align: left;
+}
+
+.imagePreview h3 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.imageGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.imageItem {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #e0e0e0;
+}
+
+.previewImage {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+}
+
+.removeImage {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(220, 53, 69, 0.9);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.removeImage:hover {
+  background: rgba(220, 53, 69, 1);
+}
+
+/* Checkbox Styles */
+.checkboxGroup {
+  margin-bottom: 2rem;
+}
+
+.checkboxGroup h3 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.checkboxGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.checkboxLabel:hover {
+  background: #f8f9fa;
+}
+
+.checkboxLabel input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #667eea;
+}
+
+/* Review Section */
+.reviewSection {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #667eea;
+}
+
+.reviewSection h3 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.reviewSection p {
+  margin: 0.5rem 0;
+  color: #555;
+}
+
+.submitNote {
+  background: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  color: #856404;
+  margin-bottom: 1rem;
+}
+
+/* Button Styles */
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.prevButton,
+.nextButton,
+.submitButton {
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+  max-width: 200px;
+}
+
+.prevButton {
+  background: #6c757d;
+  color: white;
+}
+
+.prevButton:hover {
+  background: #5a6268;
+}
+
+.nextButton {
+  background: #667eea;
+  color: white;
+}
+
+.nextButton:hover {
+  background: #5a6fd8;
+  transform: translateY(-1px);
+}
+
+.submitButton {
+  background: #28a745;
+  color: white;
+  font-size: 1.1rem;
+}
+
+.submitButton:hover {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .formContainer {
+    padding: 1rem;
+    margin: 0 1rem;
+  }
+
+  .stepContent h2 {
+    font-size: 1.5rem;
+  }
+
+  .formRow {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .checkboxGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+  }
+
+  .prevButton,
+  .nextButton,
+  .submitButton {
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .stepIndicator {
+    gap: 0.5rem;
+  }
+
+  .step {
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+
+  .uploadLabel {
+    padding: 2rem 1rem;
+  }
+
+  .uploadIcon {
+    font-size: 2.5rem;
+  }
+}

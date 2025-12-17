@@ -2,7 +2,7 @@ const sampleProperties = [
   {
     id: 1,
     title: "Modern Family Home",
-    city: "San Francisco, CA",
+    city: "Phoenix, AZ",
     price: "$1,250,000",
     image: "/prop-house-1.svg",
     beds: 4,
@@ -13,7 +13,7 @@ const sampleProperties = [
   {
     id: 2,
     title: "Stylish Suburban Villa",
-    city: "Austin, TX",
+    city: "Tucson, AZ",
     price: "$899,000",
     image: "/prop-house-1.svg",
     beds: 3,
@@ -23,7 +23,7 @@ const sampleProperties = [
   {
     id: 3,
     title: "Downtown Apartment",
-    city: "New York, NY",
+    city: "Mesa, AZ",
     price: "$1,999,000",
     image: "/prop-house-1.svg",
     beds: 2,
@@ -33,7 +33,7 @@ const sampleProperties = [
   {
     id: 4,
     title: "Cozy Bungalow",
-    city: "Portland, OR",
+    city: "Scottsdale, AZ",
     price: "$649,000",
     image: "/prop-house-1.svg",
     beds: 2,
@@ -43,7 +43,7 @@ const sampleProperties = [
   {
     id: 5,
     title: "Beachfront Condo",
-    city: "Miami, FL",
+    city: "Chandler, AZ",
     price: "$2,199,000",
     image: "/prop-house-1.svg",
     beds: 3,

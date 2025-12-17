@@ -11,9 +11,9 @@ export default function Footer() {
         <div className={styles.brandSection}>
           <div className={styles.brandLogo}>
             <div className={styles.logoIcon}>
-              <i className="fa-solid fa-building"></i>
+               <Image src="/logo.svg" width={120} height={50} alt="Oikos" />
             </div>
-            <h2 className={styles.brandName}>Oikos</h2>
+            
           </div>
           <p className={styles.brandDescription}>
             Your trusted platform for buying, selling, and finding property services.
@@ -60,7 +60,7 @@ export default function Footer() {
         <div className={styles.contactSection}>
           <h3 className={styles.sectionTitle}>Contact</h3>
           <div className={styles.contactInfo}>
-            <p><strong>Address:</strong><br />123 Real Estate Ave<br />New York, NY 10001</p>
+            <p><strong>Address:</strong><br />123 Real Estate Ave<br />Helena, Montana 59601</p>
             <p><strong>Phone:</strong> <a href="tel:+15551234567">(555) 123-4567</a></p>
             <p><strong>Email:</strong> <a href="mailto:info@oikos.com">info@oikos.com</a></p>
           </div>
