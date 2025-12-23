@@ -24,7 +24,7 @@ export default function Header() {
       <nav className={styles.nav}>
         <ul>
           <li><a href="/buyer">Buyer</a></li>
-          <li><a href="/seller">Seller</a></li>s
+          <li><a href="/seller">Seller</a></li>
           <li><a href="#">Vendor</a></li>
           <li><a href="#">Agent</a></li>
         </ul>

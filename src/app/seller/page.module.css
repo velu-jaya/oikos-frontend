@@ -1,6 +1,5 @@
-.seller-page {
-  min-height: calc(100vh - 200px);
-  padding: 2rem 0;
+.sellerPage {
+  min-height: 100vh;
   background-color: #f8f9fa;
 }
 
@@ -10,24 +9,447 @@
   padding: 0 1rem;
 }
 
-.seller-hero {
-  text-align: center;
-  margin-bottom: 3rem;
-  padding: 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 12px;
+/* ==================== HERO SECTION ==================== */
+.heroSection {
+  background: linear-gradient(135deg, #549080 0%, #2d5f52 100%);
+  padding: 5rem 0;
   color: white;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
 }
 
-.seller-hero h1 {
+.heroContent {
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.heroTitle {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  letter-spacing: -0.5px;
+}
+
+.heroDescription {
+  font-size: 1.3rem;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  opacity: 0.95;
+  line-height: 1.6;
+}
+
+.ctaButton {
+  background-color: #fff;
+  color: #549080;
+  border: none;
+  padding: 0.8rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.ctaButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  background-color: #fa9c46;
+  color: white;
+}
+
+/* ==================== SECTION HEADERS ==================== */
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+}
+
+.sectionHeader h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.sectionHeader p {
+  font-size: 1.1rem;
+  color: #666;
+  margin: 0;
+}
+
+/* ==================== INFO SECTION ==================== */
+.infoSection {
+  padding: 4rem 0;
+  background-color: white;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.infoCard {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 2px solid #e8e8e8;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.infoCard:hover {
+  transform: translateY(-8px);
+  border-color: #549080;
+  box-shadow: 0 12px 30px rgba(84, 144, 128, 0.15);
+}
+
+.infoIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+  color: #549080;
+  transition: all 0.3s ease;
+}
+
+.infoCard:hover .infoIcon {
+  color: #fa9c46;
+  transform: scale(1.1);
+}
+
+.infoCard h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  color: #333;
+}
+
+.infoCard p {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ==================== BENEFITS SECTION ==================== */
+.benefitsSection {
+  padding: 4rem 0;
+  background-color: #f8f9fa;
+}
+
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.benefitCard {
+  background: white;
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.benefitCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(84, 144, 128, 0.12);
+}
+
+.benefitIcon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+  animation: bounce 2s infinite;
+  color: #549080;
+  transition: all 0.3s ease;
+}
+
+.benefitCard:hover .benefitIcon {
+  color: #fa9c46;
+  transform: scale(1.15);
+}
+
+.benefitCard h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  color: #333;
+}
+
+.benefitCard p {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ==================== PROCESS SECTION ==================== */
+.processSection {
+  padding: 4rem 0;
+  background-color: white;
+}
+
+.processSteps {
+  display: grid;
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.processStep {
+  display: flex;
+  gap: 2rem;
+  position: relative;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border-left: 4px solid #549080;
+  transition: all 0.3s ease;
+}
+
+.processStep:hover {
+  box-shadow: 0 8px 20px rgba(84, 144, 128, 0.12);
+  transform: translateX(5px);
+}
+
+.stepNumber {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #549080 0%, #2d5f52 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(84, 144, 128, 0.3);
+}
+
+.stepContent h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.stepContent p {
+  color: #666;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.stepConnector {
+  position: absolute;
+  left: 29px;
+  top: 100%;
+  width: 2px;
+  height: 30px;
+  background: linear-gradient(to bottom, #549080, transparent);
+}
+
+/* ==================== FORM SECTION ==================== */
+.formSection {
+  padding: 4rem 0;
+  background-color: white;
+}
+
+/* ==================== FAQ SECTION ==================== */
+.faqSection {
+  padding: 4rem 0;
+  background-color: #f8f9fa;
+}
+
+.faqContainer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faqItem {
+  margin-bottom: 1rem;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.faqItem:hover {
+  box-shadow: 0 4px 15px rgba(84, 144, 128, 0.1);
+}
+
+.faqQuestion {
+  width: 100%;
+  padding: 1.5rem;
+  background: white;
+  border: none;
+  text-align: left;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.faqQuestion:hover {
+  background-color: #f8f9fa;
+  color: #549080;
+}
+
+.faqIcon {
+  display: inline-block;
+  transition: transform 0.3s ease;
+  color: #549080;
+  font-size: 0.8rem;
+}
+
+.faqIcon.active {
+  transform: rotate(180deg);
+}
+
+.faqAnswer {
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-top: 1px solid #e8e8e8;
+  animation: slideDown 0.3s ease-out;
+}
+
+.faqAnswer p {
+  margin: 0;
+  color: #666;
+  line-height: 1.8;
+  font-size: 0.95rem;
+}
+
+/* ==================== CTA SECTION ==================== */
+.ctaSection {
+  padding: 5rem 0;
+  background: linear-gradient(135deg, #549080 0%, #2d5f52 100%);
+  color: white;
+  text-align: center;
+}
+
+.ctaContent h2 {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
 }
 
-.seller-hero p {
-  font-size: 1.2rem;
-  opacity: 0.9;
-  margin: 0;
+.ctaContent p {
+  font-size: 1.1rem;
+  opacity: 0.95;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
+
+.ctaButtonLarge {
+  background-color: #fff;
+  color: #549080;
+  border: none;
+  padding: 1rem 3rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.ctaButtonLarge:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  background-color: #fa9c46;
+  color: white;
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 2.2rem;
+  }
+
+  .heroDescription {
+    font-size: 1rem;
+  }
+
+  .sectionHeader h2 {
+    font-size: 1.8rem;
+  }
+
+  .infoGrid,
+  .benefitsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .processStep {
+    padding: 1.5rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .stepNumber {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+
+  .stepConnector {
+    left: 24px;
+  }
+
+  .ctaContent h2 {
+    font-size: 1.8rem;
+  }
+
+  .ctaContent p {
+    font-size: 1rem;
+  }
+
+  .faqQuestion {
+    font-size: 0.95rem;
+    padding: 1.2rem;
+  }
+}
+
