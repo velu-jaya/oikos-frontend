@@ -187,7 +187,7 @@ a.secondary {
 .register{
   padding: 8px 14px;
   background: var(--primary);
-  color: #fff;
+  color: #000;
   border-radius: 8px;
 }
 
