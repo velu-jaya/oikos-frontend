@@ -27,6 +27,7 @@ export default function Header() {
           <li><a href="/seller">Seller</a></li>
           <li><a href="/vendor">Vendor</a></li>
           <li><a href="/agent">Agent</a></li>
+          <li><a href="/blog">Blog</a></li>
         </ul>
       </nav>
       <div className={styles.actions}>
