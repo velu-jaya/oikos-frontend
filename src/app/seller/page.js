@@ -4,9 +4,11 @@ import { useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import PropertyListingForm from '@/components/PropertyListingForm';
+import PropertyListingModal from '@/components/PropertyListingModal';
 import styles from './page.module.css';
 
 export default function SellerPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeAccordion, setActiveAccordion] = useState(null);
 
   const toggleAccordion = (index) => {
@@ -159,7 +161,7 @@ export default function SellerPage() {
               <p className={styles.heroDescription}>
                 List your property and connect with genuine buyers faster. Our platform helps you showcase your property, manage enquiries, and close deals smoothly.
               </p>
-              <button className={styles.ctaButton} onClick={() => document.querySelector('.' + styles.formSection).scrollIntoView({ behavior: 'smooth' })}>
+              <button className={styles.ctaButton} onClick={() => setIsModalOpen(true)}>
                 Start Listing Now
               </button>
             </div>
@@ -284,6 +286,7 @@ export default function SellerPage() {
           </div>
         </section>
       </main>
+      <PropertyListingModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <Footer />
     </div>
   );
