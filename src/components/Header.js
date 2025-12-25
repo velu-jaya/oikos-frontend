@@ -25,7 +25,7 @@ export default function Header() {
         <ul>
           <li><a href="/buyer">Buyer</a></li>
           <li><a href="/seller">Seller</a></li>
-          <li><a href="#">Vendor</a></li>
+          <li><a href="/vendor">Vendor</a></li>
           <li><a href="#">Agent</a></li>
         </ul>
       </nav>

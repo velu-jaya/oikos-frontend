@@ -1,0 +1,480 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-in-out;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modalContent {
+  background-color: white;
+  border-radius: 16px;
+  padding: 40px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  position: relative;
+  animation: slideUp 0.3s ease-in-out;
+  flex-shrink: 0;
+}
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.closeButton:hover {
+  color: #333;
+}
+
+.stepContainer {
+  animation: slideUp 0.3s ease-in-out;
+}
+
+.stepHeader {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.stepHeader h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.stepHeader p {
+  color: #666;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* Error and Success Messages */
+.errorMessage {
+  background-color: #fee;
+  border: 1px solid #fcc;
+  color: #c33;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  animation: slideDown 0.3s ease-out;
+}
+
+.successMessage {
+  background-color: #efe;
+  border: 1px solid #cfc;
+  color: #3c3;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Form Styles */
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formGroup label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.formGroup input,
+.formGroup select {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease;
+  font-family: inherit;
+}
+
+.formGroup input:focus,
+.formGroup select:focus {
+  outline: none;
+  border-color: #0066CC;
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.formGroup input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+/* Mobile OTP Container */
+.mobileOtpContainer {
+  display: flex;
+  gap: 8px;
+}
+
+.mobileOtpContainer input {
+  flex: 1;
+}
+
+.otpButton {
+  padding: 10px 16px;
+  background-color: #0066CC;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.otpButton:hover:not(:disabled) {
+  background-color: #0052A3;
+}
+
+.otpButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* OTP Input Container */
+.otpInputContainer {
+  display: flex;
+  gap: 8px;
+}
+
+.otpInputContainer input {
+  flex: 1;
+  letter-spacing: 4px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.verifyButton {
+  padding: 10px 16px;
+  background-color: #0066CC;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.verifyButton:hover:not(:disabled) {
+  background-color: #0052A3;
+}
+
+.verifyButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Buttons */
+.continueButton {
+  padding: 12px 24px;
+  background-color: #0066CC;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.continueButton:hover:not(:disabled) {
+  background-color: #0052A3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 102, 204, 0.3);
+}
+
+.continueButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.backButton {
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.backButton:hover {
+  background-color: #e0e0e0;
+}
+
+/* Plans Container */
+.plansContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.planCard {
+  border: 2px solid #e8e8e8;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.planCard:hover {
+  border-color: #0066CC;
+  box-shadow: 0 8px 20px rgba(0, 102, 204, 0.15);
+  transform: translateY(-4px);
+}
+
+.planCard.selected {
+  border-color: #0066CC;
+  background: linear-gradient(135deg, #f0f6ff 0%, #ffffff 100%);
+  box-shadow: 0 8px 24px rgba(0, 102, 204, 0.2);
+}
+
+.savingsBadge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #FFB800;
+  color: #333;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.planCard h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.priceContainer {
+  margin-bottom: 1rem;
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.2rem;
+}
+
+.currencySymbol {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.amount {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0066CC;
+}
+
+.period {
+  font-size: 0.85rem;
+  color: #666;
+  margin-left: 0.3rem;
+}
+
+.planDescription {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.featuresList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  text-align: left;
+  flex: 1;
+}
+
+.featuresList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  font-size: 0.85rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+.featuresList i {
+  color: #0066CC;
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+.selectButton {
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  color: #333;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.selectButton:hover {
+  background-color: #e0e0e0;
+}
+
+.selectButton.active {
+  background-color: #0066CC;
+  color: white;
+  border-color: #0066CC;
+}
+
+.selectButton.active:hover {
+  background-color: #0052A3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modalContent {
+    padding: 30px;
+    max-width: 95%;
+    max-height: 95vh;
+  }
+
+  .plansContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .planCard {
+    padding: 20px;
+  }
+
+  .amount {
+    font-size: 1.8rem;
+  }
+
+  .mobileOtpContainer,
+  .otpInputContainer {
+    flex-direction: column;
+  }
+
+  .otpButton,
+  .verifyButton {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .modalContent {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .stepHeader h2 {
+    font-size: 1.4rem;
+  }
+
+  .formGroup input,
+  .formGroup select {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  .planCard {
+    padding: 16px;
+  }
+
+  .planCard h3 {
+    font-size: 1.1rem;
+  }
+
+  .amount {
+    font-size: 1.5rem;
+  }
+
+  .featuresList li {
+    font-size: 0.8rem;
+  }
+}
