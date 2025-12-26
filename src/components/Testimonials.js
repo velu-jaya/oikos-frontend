@@ -52,7 +52,7 @@ export default function Testimonials() {
           <span className={styles.sectionEyebrow}>Testimonials</span>
           <h2>Trusted by residents, sellers, and vendor partners</h2>
           <p>
-            Hear how Oikos removes friction from property discovery, renovation, and vendor collaboration
+            Hear how Qilo removes friction from property discovery, renovation, and vendor collaboration
             across India’s most vibrant cities.
           </p>
         </div>

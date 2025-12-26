@@ -11,7 +11,7 @@ export default function Footer() {
         <div className={styles.brandSection}>
           <div className={styles.brandLogo}>
             <div className={styles.logoIcon}>
-               <Image src="/logo.svg" width={120} height={50} alt="Oikos" />
+               <Image src="/logo.svg" width={120} height={50} alt="Qilo" />
             </div>
             
           </div>
@@ -42,6 +42,7 @@ export default function Footer() {
             <li><a href="/properties">Properties</a></li>
             <li><a href="/vendors">Vendors</a></li>
             <li><a href="/contact">Contact</a></li>
+            <li><a href="/terms-and-policy">Terms & Policy</a></li>
           </ul>
         </div>
 
@@ -62,7 +63,7 @@ export default function Footer() {
           <div className={styles.contactInfo}>
             <p><strong>Address:</strong><br />123 Real Estate Ave<br />Helena, Montana 59601</p>
             <p><strong>Phone:</strong> <a href="tel:+15551234567">(555) 123-4567</a></p>
-            <p><strong>Email:</strong> <a href="mailto:info@oikos.com">info@oikos.com</a></p>
+            <p><strong>Email:</strong> <a href="mailto:info@qilo.com">info@qilo.com</a></p>
           </div>
         </div>
       </div>
@@ -72,7 +73,7 @@ export default function Footer() {
 
       {/* Copyright */}
       <div className={styles.copyright}>
-        <p>&copy; {currentYear} Oikos. All rights reserved.</p>
+        <p>&copy; {currentYear} Qilo. All rights reserved.</p>
       </div>
     </footer>
   );

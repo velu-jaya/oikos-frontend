@@ -235,7 +235,7 @@ export default function PropertyDetailsPage({ params }) {
                 <i className="fas fa-message"></i> Message
               </button>
               <button className={styles.btnSecondary}>
-                <i className="fas fa-comments"></i> Chat with Oikos
+                <i className="fas fa-comments"></i> Chat with Qilo
               </button>
             </div>
 

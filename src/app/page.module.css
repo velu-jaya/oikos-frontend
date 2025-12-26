@@ -193,7 +193,8 @@ a.secondary {
 
 /* Hero */
 .hero{
-  width: 100%;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
   min-height: 650px;
   background-size: cover;
   background-position: center;

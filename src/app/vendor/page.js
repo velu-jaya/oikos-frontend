@@ -64,7 +64,7 @@ export default function VendorPage() {
     {
       icon: 'fa-clock',
       title: 'Save Time',
-      description: 'Stop searching for leads. Let qualified buyers and sellers find you on Oikos.'
+      description: 'Stop searching for leads. Let qualified buyers and sellers find you on Qilo.'
     },
     {
       icon: 'fa-chart-line',
@@ -91,11 +91,11 @@ export default function VendorPage() {
 
   const faqs = [
     {
-      question: 'How much does it cost to join Oikos as a vendor?',
-      answer: 'Joining Oikos is free! We offer flexible subscription plans starting from basic to premium tiers. Choose the plan that works best for your business.'
+      question: 'How much does it cost to join Qilo as a vendor?',
+      answer: 'Joining Qilo is free! We offer flexible subscription plans starting from basic to premium tiers. Choose the plan that works best for your business.'
     },
     {
-      question: 'How do I get leads on Oikos?',
+      question: 'How do I get leads on Qilo?',
       answer: 'Once you create your vendor profile, buyers and sellers in your service area can directly contact you. The more complete your profile, the more inquiries you receive.'
     },
     {
@@ -120,7 +120,7 @@ export default function VendorPage() {
     },
     {
       question: 'Is there customer support available?',
-      answer: 'Yes! Our support team is available 24/7 to help with any questions about your vendor account or the Oikos platform.'
+      answer: 'Yes! Our support team is available 24/7 to help with any questions about your vendor account or the Qilo platform.'
     },
   ];
 
@@ -134,7 +134,7 @@ export default function VendorPage() {
             <div className={styles.heroContent}>
               <h1 className={styles.heroTitle}>Get More Local Work from Property Buyers & Sellers</h1>
               <p className={styles.heroDescription}>
-                Connect with verified buyers and sellers actively looking for professionals like you. Build your reputation, get leads, and grow your business on Oikos.
+                Connect with verified buyers and sellers actively looking for professionals like you. Build your reputation, get leads, and grow your business on Qilo.
               </p>
               <button className={styles.ctaButton} onClick={() => setIsModalOpen(true)}>
                 Join as Vendor
@@ -197,7 +197,7 @@ export default function VendorPage() {
         <section className={styles.whyJoinSection}>
           <div className={styles.container}>
             <div className={styles.sectionHeader}>
-              <h2>Why Join Oikos?</h2>
+              <h2>Why Join Qilo?</h2>
               <p>Get more work and build your professional reputation</p>
             </div>
             <div className={styles.benefitsGrid}>
@@ -328,7 +328,7 @@ export default function VendorPage() {
           <div className={styles.container}>
             <div className={styles.sectionHeader}>
               <h2>Frequently Asked Questions</h2>
-              <p>Get answers to common questions about becoming a vendor on Oikos</p>
+              <p>Get answers to common questions about becoming a vendor on Qilo</p>
             </div>
             <div className={styles.faqContainer}>
               {faqs.map((faq, index) => (
@@ -356,7 +356,7 @@ export default function VendorPage() {
           <div className={styles.container}>
             <div className={styles.ctaContent}>
               <h2>Ready to Get More Work?</h2>
-              <p>Join thousands of professionals on Oikos and grow your business today.</p>
+              <p>Join thousands of professionals on Qilo and grow your business today.</p>
               <div className={styles.ctaButtons}>
                 <button className={styles.primaryButton} onClick={() => setIsModalOpen(true)}>Join as Vendor</button>
                 <button className={styles.secondaryButton}>Learn More</button>

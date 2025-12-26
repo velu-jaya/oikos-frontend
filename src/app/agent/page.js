@@ -105,7 +105,7 @@ export default function AgentPage() {
   const faqs = [
     {
       question: 'Is there a cost to join as an agent?',
-      answer: 'Joining Oikos as an agent is free! You can list properties and receive enquiries at no cost. We offer optional premium features for agents who want additional visibility.'
+      answer: 'Joining Qilo as an agent is free! You can list properties and receive enquiries at no cost. We offer optional premium features for agents who want additional visibility.'
     },
     {
       question: 'How do I list a property?',
@@ -117,7 +117,7 @@ export default function AgentPage() {
     },
     {
       question: 'How do buyers and sellers contact me?',
-      answer: 'Both can call you directly or send messages through the platform. Your phone number is visible only to verified users. You can also schedule viewings directly through Oikos.'
+      answer: 'Both can call you directly or send messages through the platform. Your phone number is visible only to verified users. You can also schedule viewings directly through Qilo.'
     },
     {
       question: 'Can I manage both buying and selling activities?',
@@ -141,7 +141,7 @@ export default function AgentPage() {
     },
     {
       question: 'What if I need help with something?',
-      answer: 'Our support team is available 24/7 to help with any questions about your agent account or the Oikos platform.'
+      answer: 'Our support team is available 24/7 to help with any questions about your agent account or the Qilo platform.'
     },
   ];
 
@@ -155,7 +155,7 @@ export default function AgentPage() {
             <div className={styles.heroContent}>
               <h1 className={styles.heroTitle}>Close More Property Deals Faster</h1>
               <p className={styles.heroDescription}>
-                Buy, sell, and manage properties all in one place. Connect with serious buyers and sellers, list properties, and build your professional reputation on Oikos.
+                Buy, sell, and manage properties all in one place. Connect with serious buyers and sellers, list properties, and build your professional reputation on Qilo.
               </p>
               <button className={styles.ctaButton}>
                 Join as Agent
@@ -317,7 +317,7 @@ export default function AgentPage() {
         <section className={styles.successSection}>
           <div className={styles.container}>
             <div className={styles.sectionHeader}>
-              <h2>Agents Are Succeeding on Oikos</h2>
+              <h2>Agents Are Succeeding on Qilo</h2>
               <p>Real agents making more deals buying and selling</p>
             </div>
             <div className={styles.statsGrid}>
@@ -346,7 +346,7 @@ export default function AgentPage() {
           <div className={styles.container}>
             <div className={styles.sectionHeader}>
               <h2>Frequently Asked Questions</h2>
-              <p>Get answers to common questions about becoming an agent on Oikos</p>
+              <p>Get answers to common questions about becoming an agent on Qilo</p>
             </div>
             <div className={styles.faqContainer}>
               {faqs.map((faq, index) => (
@@ -374,7 +374,7 @@ export default function AgentPage() {
           <div className={styles.container}>
             <div className={styles.ctaContent}>
               <h2>Ready to Buy, Sell & Close More Deals?</h2>
-              <p>Join thousands of successful agents on Oikos who are buying, selling, and growing their business.</p>
+              <p>Join thousands of successful agents on Qilo who are buying, selling, and growing their business.</p>
               <div className={styles.ctaButtons}>
                 <button className={styles.primaryButton}>Join as Agent</button>
                 <button className={styles.secondaryButton}>Learn More</button>

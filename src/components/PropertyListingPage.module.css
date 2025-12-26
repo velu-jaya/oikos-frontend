@@ -1,4 +1,4 @@
-.buyerPage {
+.container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -38,12 +38,10 @@
   display: flex;
   gap: 12px;
   padding: 15px;
-  background: white;
-  border-bottom: 1px solid #eee;
+  position: absolute;
   flex-wrap: wrap;
   align-items: center;
-  position: relative;
-  z-index: 10;
+  z-index: 99;
 }
 
 .filterDropdown {
@@ -233,7 +231,7 @@
 .propertyList {
   flex: 1;
   overflow-y: auto;
-  max-height: 800px;
+  max-height: 100%;
   padding: 15px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
