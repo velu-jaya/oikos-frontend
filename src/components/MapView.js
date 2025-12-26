@@ -77,14 +77,7 @@ export default function MapView({
                 onMouseEnter={() => setHoveredProperty(property)}
                 onMouseLeave={() => setHoveredProperty(null)}
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  width="24"
-                  height="24"
-                  fill="currentColor"
-                >
-                  <path d="M12 2C6.48 2 2 6.48 2 12c0 7 10 18 10 18s10-11 10-18c0-5.52-4.48-10-10-10zm0 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z" />
-                </svg>
+                <i className="fas fa-map-marker-alt"></i>
               </div>
 
               {/* Price tooltip on hover */}
