@@ -1,7 +1,8 @@
 import styles from "../app/page.module.css";
 
-export default function Plans() {
-  const planCategories = [
+export default function Plans({keyValue = 'all'}) {
+  console.log("keyValue",keyValue);
+  let planCategories = [
     {
       key: "buyers",
       title: "Buyers",
@@ -115,6 +116,13 @@ export default function Plans() {
       ],
     },
   ];
+
+  if(keyValue != 'all'){
+    console.log("Come here");
+    planCategories = planCategories.filter((filterData) => filterData.key == keyValue);
+    console.log("filteredCategories",planCategories);
+  }
+  console.log("planCategories",planCategories);
 
   return (
     <section id="plans" className={styles.plansSection}>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import styles from './RegisterModal.module.css';
+import Plans from "./Plans";
 
 export default function RegisterModal({ isOpen, onClose }) {
   const [currentStep, setCurrentStep] = useState(1); // 1: basic info, 2: user type, 3: verification, 4: success
@@ -75,8 +76,10 @@ export default function RegisterModal({ isOpen, onClose }) {
         setError('Phone number is required.');
         return;
       }
+      setCurrentStep(3);
+      /*
       // Send verification code
-      setIsLoading(true);
+      // setIsLoading(true);
       try {
         const response = await fetch('/api/auth/register', {
           method: 'POST',
@@ -102,7 +105,7 @@ export default function RegisterModal({ isOpen, onClose }) {
         setError(err.message);
       } finally {
         setIsLoading(false);
-      }
+      } */
     }
   };
 
@@ -114,10 +117,10 @@ export default function RegisterModal({ isOpen, onClose }) {
       setError('Please enter the verification code.');
       return;
     }
-
+    setCurrentStep(4);
     setIsLoading(true);
 
-    try {
+    /*try {
       const response = await fetch('/api/auth/verify', {
         method: 'POST',
         headers: {
@@ -138,7 +141,7 @@ export default function RegisterModal({ isOpen, onClose }) {
       setError(err.message);
     } finally {
       setIsLoading(false);
-    }
+    } */
   };
 
   const handleResendCode = async () => {
@@ -467,6 +470,7 @@ export default function RegisterModal({ isOpen, onClose }) {
               <p className={styles.successMessage}>
                 Your account is now active and ready to use. Start exploring properties and opportunities today.
               </p>
+              <Plans keyValue={`${userType}s`}/>
             </div>
 
             <button
