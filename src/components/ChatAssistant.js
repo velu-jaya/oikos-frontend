@@ -23,7 +23,7 @@ const questionGroups = [
       "How do I request a property valuation?",
       "What marketing services do you provide for listings?",
       "How quickly can my property go live on the platform?",
-      "What fees should I expect when selling with Oikos?"
+      "What fees should I expect when selling with Qilo?"
     ]
   },
   {
@@ -42,7 +42,7 @@ const questionGroups = [
     label: "Vendor",
     description: "Information for service partners and vendors.",
     questions: [
-      "How do I partner with Oikos as a vendor?",
+      "How do I partner with Qilo as a vendor?",
       "What onboarding documents are required?",
       "Who is the point of contact for vendor support?",
       "How can I update my service availability?"
@@ -53,7 +53,7 @@ const questionGroups = [
 const createInitialMessages = () => [
   {
     role: "assistant",
-    text: "Hi there! I'm the Oikos AI concierge. Pick a quick question below or tell us how we can help."
+    text: "Hi there! I'm the Qilo AI concierge. Pick a quick question below or tell us how we can help."
   }
 ];
 

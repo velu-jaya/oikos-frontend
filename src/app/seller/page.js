@@ -117,7 +117,7 @@ export default function SellerPage() {
   const faqs = [
     {
       question: 'How much does it cost to list a property?',
-      answer: 'Listing your property on Oikos is completely free! We only charge a small commission when your property is successfully sold.'
+      answer: 'Listing your property on Qilo is completely free! We only charge a small commission when your property is successfully sold.'
     },
     {
       question: 'How long does it take to list my property?',
@@ -193,7 +193,7 @@ export default function SellerPage() {
         <section className={styles.benefitsSection}>
           <div className={styles.container}>
             <div className={styles.sectionHeader}>
-              <h2>Why Sell on Oikos?</h2>
+              <h2>Why Sell on Qilo?</h2>
               <p>Get the best experience with our seller-first platform</p>
             </div>
             <div className={styles.benefitsGrid}>
@@ -248,7 +248,7 @@ export default function SellerPage() {
           <div className={styles.container}>
             <div className={styles.sectionHeader}>
               <h2>Frequently Asked Questions</h2>
-              <p>Get answers to common questions about listing on Oikos</p>
+              <p>Get answers to common questions about listing on Qilo</p>
             </div>
             <div className={styles.faqContainer}>
               {faqs.map((faq, index) => (
@@ -278,7 +278,7 @@ export default function SellerPage() {
           <div className={styles.container}>
             <div className={styles.ctaContent}>
               <h2>Ready to Sell Your Property?</h2>
-              <p>Join thousands of successful sellers who have found their perfect buyers on Oikos</p>
+              <p>Join thousands of successful sellers who have found their perfect buyers on Qilo</p>
               <button className={styles.ctaButtonLarge} onClick={() => document.querySelector('.' + styles.formSection).scrollIntoView({ behavior: 'smooth' })}>
                 List Your Property Today
               </button>

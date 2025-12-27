@@ -70,7 +70,7 @@ export default function RoleNavigation() {
     <section className={styles.roleNavigation}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <h2>How Would You Like to Use Oikos?</h2>
+          <h2>How Would You Like to Use Qilo?</h2>
           <p>Choose your role and unlock features tailored just for you</p>
         </div>
 

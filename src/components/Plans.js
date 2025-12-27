@@ -19,7 +19,7 @@ export default function Plans({keyValue = 'all'}) {
           features: [
             "Unlimited marketplace browsing & saved searches",
             "Buyer workspace to manage offers and timelines",
-            "Direct messaging with sellers and Oikos Advisors",
+            "Direct messaging with sellers and Qilo Advisors",
           ],
         },
         {
@@ -31,7 +31,7 @@ export default function Plans({keyValue = 'all'}) {
           highlight: true,
           features: [
             "Everything in Monthly, plus concierge onboarding",
-            "Annual strategy review with an Oikos Advisor",
+            "Annual strategy review with an Qilo Advisor",
             "Priority access to off-market opportunities",
           ],
         },
@@ -53,7 +53,7 @@ export default function Plans({keyValue = 'all'}) {
       key: "sellers",
       title: "Sellers",
       description: "Pick the listing package that matches your marketing goals.",
-      cta: "List with Oikos",
+      cta: "List with Qilo",
       theme: "planCategorySellers",
       options: [
         {
@@ -104,13 +104,13 @@ export default function Plans({keyValue = 'all'}) {
           name: "Annual",
           billing: "/year",
           price: "$299",
-          caption: "Discounted plan for partners ready to scale with Oikos.",
+          caption: "Discounted plan for partners ready to scale with Qilo.",
           badge: "Save 14%",
           highlight: true,
           features: [
             "Everything in Monthly, plus spotlight placement",
             "Quarterly performance insights and benchmarks",
-            "Co-marketing opportunities with the Oikos network",
+            "Co-marketing opportunities with the Qilo network",
           ],
         },
       ],
@@ -132,7 +132,7 @@ export default function Plans({keyValue = 'all'}) {
           <h2>Plans tailored to every step of the transaction</h2>
           <p>
             Buyers, sellers, and vendors get dedicated tools, transparent pricing,
-            and hands-on support from the Oikos team.
+            and hands-on support from the Qilo team.
           </p>
         </div>
 

@@ -215,7 +215,7 @@ export default function RegisterModal({ isOpen, onClose }) {
         {currentStep === 1 && (
           <>
             <h2 className={styles.title}>Create Your Account</h2>
-            <p className={styles.subtitle}>Join Oikos and find your perfect property</p>
+            <p className={styles.subtitle}>Join Qilo and find your perfect property</p>
 
             <form onSubmit={handleNextStep} className={styles.form}>
               {error && <div className={styles.error}>{error}</div>}
@@ -311,12 +311,12 @@ export default function RegisterModal({ isOpen, onClose }) {
                     disabled={isLoading}
                   />
                   <span>
-                    I agree to Oikos's{' '}
-                    <a href="/terms" className={styles.termsLink}>
+                    I agree to Qilo's{' '}
+                    <a href="/terms-and-policy" className={styles.termsLink} target="_blank" rel="noopener noreferrer">
                       Terms and Conditions
                     </a>
                     {' '}and{' '}
-                    <a href="/privacy" className={styles.termsLink}>
+                    <a href="/terms-and-policy" className={styles.termsLink} target="_blank" rel="noopener noreferrer">
                       Privacy Policy
                     </a>
                   </span>
@@ -463,7 +463,7 @@ export default function RegisterModal({ isOpen, onClose }) {
           <>
             <div className={styles.successContainer}>
               <div className={styles.successIcon}>✓</div>
-              <h2 className={styles.title}>Welcome to Oikos!</h2>
+              <h2 className={styles.title}>Welcome to Qilo!</h2>
               <p className={styles.subtitle}>
                 Your email has been verified successfully.
               </p>

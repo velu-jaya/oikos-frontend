@@ -136,12 +136,12 @@ export default function LoginModal({ isOpen, onClose }) {
                 disabled={isLoading}
               />
               <span>
-                By continuing you agree to Oikos's{' '}
-                <a href="/terms" className={styles.termsLink}>
+                By continuing you agree to Qilo's{' '}
+                <a href="/terms-and-policy" className={styles.termsLink} target="_blank" rel="noopener noreferrer">
                   Terms and Conditions
                 </a>
                 {' '}and{' '}
-                <a href="/privacy" className={styles.termsLink}>
+                <a href="/terms-and-policy" className={styles.termsLink} target="_blank" rel="noopener noreferrer">
                   Privacy Policy
                 </a>
               </span>

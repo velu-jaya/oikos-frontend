@@ -19,7 +19,7 @@ export default function Header() {
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
       <div className={styles.brand}>
-        <Image src="/logo.svg" width={120} height={100} alt="Oikos" />
+        <Image src="/logo.svg" width={120} height={100} alt="Qilo" />
       </div>
       <nav className={styles.nav}>
         <ul>

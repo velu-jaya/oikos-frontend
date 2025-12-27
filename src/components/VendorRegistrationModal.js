@@ -148,11 +148,11 @@ export default function VendorRegistrationModal({ isOpen, onClose }) {
       price: 299,
       period: '/year',
       savings: 'Save 14%',
-      description: 'Discounted plan for partners ready to scale with Oikos.',
+      description: 'Discounted plan for partners ready to scale with Qilo.',
       features: [
         'Everything in Monthly, plus spotlight placement',
         'Quarterly performance insights and benchmarks',
-        'Co-marketing opportunities with the Oikos network',
+        'Co-marketing opportunities with the Qilo network',
       ],
       cta: 'Subscribe Annual',
     },
