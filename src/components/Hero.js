@@ -51,7 +51,7 @@ export default function Hero({ children }) {
   };
 
   return (
-    <section className={styles.hero} style={{ backgroundImage: "url('/hero-bg.jpg')" }}>
+    <section className={styles.hero} style={{ backgroundImage: "url('/hero-pg-g.png')" }}>
       <div className={styles.heroOverlay}>
         <div className={styles.heroContent}>
           <h1 className={styles.heroTitle}>
