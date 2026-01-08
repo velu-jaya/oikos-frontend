@@ -63,7 +63,7 @@ export default function ClosingCreditCalculator() {
         <div className={styles.calculateSection}>
           <div className={styles.sectionHeader}>
             <div className={styles.titleWithIcon}>
-              <span className={styles.calculatorIcon}>🧮</span>
+              <i className={`fas fa-calculator ${styles.calculatorIcon}`}></i>
               <h2>Calculate Your Closing Credit</h2>
             </div>
             <p className={styles.subtitle}>See how much money you'll receive back at closing</p>
@@ -109,7 +109,7 @@ export default function ClosingCreditCalculator() {
             <div className={styles.comparisonSection}>
               <div className={styles.comparisonColumn}>
                 <div className={styles.comparisonHeader}>
-                  <h3>Traditional Way <span className={styles.emoji}>😞</span></h3>
+                  <h3>Traditional Way <i className={`fas fa-frown ${styles.emoji}`}></i></h3>
                   <p>Full buyer's agent commission goes to the agent</p>
                 </div>
                 <div className={styles.donutChart}>
@@ -184,7 +184,7 @@ export default function ClosingCreditCalculator() {
 
               <div className={styles.comparisonColumn}>
                 <div className={styles.comparisonHeader}>
-                  <h3>The Qilo Way <span className={styles.emoji}>💰</span></h3>
+                  <h3>The Qilo Way <i className={`fas fa-money-bill-wave ${styles.emoji}`}></i></h3>
                   <p>Most of the commission returns to you</p>
                 </div>
                 <div className={styles.donutChart}>

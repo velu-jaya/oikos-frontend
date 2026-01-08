@@ -176,7 +176,6 @@ a.secondary {
 }
 .nav a:hover {
   color: var(--primary);
-  text-decoration: underline;
 }
 
 .actions {
@@ -185,16 +184,37 @@ a.secondary {
   align-items: center;
 }
 
-.login{
+.login {
   padding: 8px 12px;
-  color: var(--muted);
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  background: transparent;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.register{
+.login:hover {
+  background: rgba(84, 144, 128, 0.08);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.register {
   padding: 8px 14px;
   background: var(--primary);
-  color: #000;
+  color: #fff;
   border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.register:hover {
+  background: #4a7a6f;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(84, 144, 128, 0.2);
 }
 
 /* Hero */

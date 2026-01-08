@@ -19,7 +19,7 @@ export default function Home() {
       <main className={styles.main}>
         <Hero />
         <RoleNavigation />
-        <SearchBar />
+        
         <ClosingCreditCalculator />
         <FeaturedProperties properties={sampleProperties} />
         <Testimonials />

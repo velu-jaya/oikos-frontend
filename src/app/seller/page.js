@@ -233,7 +233,7 @@ export default function SellerPage() {
         </section>
 
         {/* Listing Form Section */}
-        <section className={`${styles.formSection}`}>
+      { /* <section className={`${styles.formSection}`}>
           <div className={styles.container}>
             <div className={styles.sectionHeader}>
               <h2>Create Your Listing</h2>
@@ -241,7 +241,7 @@ export default function SellerPage() {
             </div>
             <PropertyListingForm />
           </div>
-        </section>
+        </section> */}
 
         {/* FAQ Section */}
         <section className={styles.faqSection}>
@@ -279,7 +279,7 @@ export default function SellerPage() {
             <div className={styles.ctaContent}>
               <h2>Ready to Sell Your Property?</h2>
               <p>Join thousands of successful sellers who have found their perfect buyers on Qilo</p>
-              <button className={styles.ctaButtonLarge} onClick={() => document.querySelector('.' + styles.formSection).scrollIntoView({ behavior: 'smooth' })}>
+              <button className={styles.ctaButtonLarge} onClick={() => setIsModalOpen(true)}>
                 List Your Property Today
               </button>
             </div>

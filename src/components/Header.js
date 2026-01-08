@@ -19,7 +19,7 @@ export default function Header() {
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
       <div className={styles.brand}>
-        <Image src="/logo-small.png" width={120} height={50} alt="Qilo" />
+        <a href="/"><Image src="/logo-small.png" width={120} height={50} alt="Qilo" /></a>
       </div>
       <nav className={styles.nav}>
         <ul>
@@ -32,14 +32,14 @@ export default function Header() {
       </nav>
       <div className={styles.actions}>
         <button 
-          className={`primary-btn`} 
+          className={styles.login}
           onClick={() => setLoginModalOpen(true)}
           
         >
           Login
         </button>
         <button 
-          className='primary-btn'
+          className={styles.register}
           onClick={() => setRegisterModalOpen(true)}
           
         >
