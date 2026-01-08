@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Hero from "../components/Hero";
 import RoleNavigation from "../components/RoleNavigation";
 import SearchBar from "../components/SearchBar";
+import ClosingCreditCalculator from "../components/ClosingCreditCalculator";
 import FeaturedProperties from "../components/FeaturedProperties";
 import Testimonials from "../components/Testimonials";
 import Plans from "../components/Plans";
@@ -19,6 +20,7 @@ export default function Home() {
         <Hero />
         <RoleNavigation />
         <SearchBar />
+        <ClosingCreditCalculator />
         <FeaturedProperties properties={sampleProperties} />
         <Testimonials />
         <Plans />

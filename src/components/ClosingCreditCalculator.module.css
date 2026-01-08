@@ -1,0 +1,322 @@
+.calculatorSection {
+  width: 100%;
+  padding: 80px 24px;
+  background: #f5f5f5;
+  display: flex;
+  justify-content: center;
+}
+
+.calculatorContainer {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+/* Calculate Section */
+.calculateSection {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 48px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.titleWithIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.calculatorIcon {
+  font-size: 32px;
+}
+
+.sectionHeader h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #666666;
+  margin: 0;
+}
+
+.inputSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.inputLabel {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  width: 100%;
+  text-align: left;
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.dollarSign {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+  z-index: 1;
+}
+
+.priceInput {
+  width: 100%;
+  padding: 16px 16px 16px 40px;
+  font-size: 20px;
+  font-weight: 600;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  background: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.priceInput:focus {
+  outline: none;
+  border-color: #549080;
+  box-shadow: 0 0 0 4px rgba(84, 144, 128, 0.1);
+}
+
+.calculateButton {
+  width: 100%;
+  padding: 16px 32px;
+  background: #616161;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.calculateButton:hover {
+  background: #424242;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Result Section */
+.resultSection {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 48px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.mainResult h3 {
+  font-size: 42px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 12px 0;
+}
+
+.resultSubtitle {
+  font-size: 20px;
+  color: #4caf50;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Comparison Section */
+.comparisonSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.comparisonColumn {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.comparisonHeader {
+  text-align: center;
+}
+
+.comparisonHeader h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 8px 0;
+}
+
+.emoji {
+  font-size: 28px;
+  margin-left: 8px;
+}
+
+.comparisonHeader p {
+  font-size: 16px;
+  color: #666666;
+  margin: 0;
+}
+
+.donutChart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.chartSvg {
+  width: 200px;
+  height: 200px;
+}
+
+.chartLabels {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.chartLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #1a1a1a;
+}
+
+.labelColor {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.summaryBox {
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.summaryItem {
+  font-size: 16px;
+  color: #1a1a1a;
+}
+
+.summaryItem strong {
+  font-size: 18px;
+}
+
+/* Breakdown Section */
+.breakdownSection {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 48px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.breakdownTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 32px 0;
+  text-align: center;
+}
+
+.breakdownCards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.breakdownCard {
+  background: #f5f5f5;
+  border-radius: 12px;
+  padding: 32px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.breakdownAmount {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.breakdownLabel {
+  font-size: 14px;
+  color: #666666;
+}
+
+.breakdownCard .breakdownTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 8px 0 0 0;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .comparisonSection {
+    grid-template-columns: 1fr;
+  }
+
+  .breakdownCards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .calculatorSection {
+    padding: 48px 16px;
+  }
+
+  .calculateSection,
+  .resultSection,
+  .comparisonColumn,
+  .breakdownSection {
+    padding: 32px 24px;
+  }
+
+  .sectionHeader h2 {
+    font-size: 24px;
+  }
+
+  .mainResult h3 {
+    font-size: 32px;
+  }
+
+  .breakdownAmount {
+    font-size: 28px;
+  }
+}
+
