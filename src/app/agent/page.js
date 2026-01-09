@@ -72,7 +72,7 @@ export default function AgentPage() {
     {
       number: '1',
       title: 'Register',
-      description: 'Create your agent account with your email and basic information'
+      description: 'Create your RealEstate Expert account with your email and basic information'
     },
     {
       number: '2',

@@ -39,7 +39,7 @@ export default function RoleNavigation() {
     {
       id: 'agent',
       icon: 'fa-briefcase',
-      title: 'Agent',
+      title: 'Real Estate Expert',
       description: 'Grow your business with our platform and connect with more clients',
       features: [
         'Manage listings efficiently',

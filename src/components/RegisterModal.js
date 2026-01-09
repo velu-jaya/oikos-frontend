@@ -349,7 +349,7 @@ export default function RegisterModal({ isOpen, onClose }) {
                   {[
                     { value: 'buyer', label: 'Buyer', icon: 'fa-home' },
                     { value: 'seller', label: 'Seller', icon: 'fa-clipboard' },
-                    { value: 'agent', label: 'Agent', icon: 'fa-briefcase' },
+                    { value: 'Real Estate Expert', label: 'Agent', icon: 'fa-briefcase' },
                     { value: 'vendor', label: 'Vendor', icon: 'fa-tools' },
                   ].map((type) => (
                     <button
