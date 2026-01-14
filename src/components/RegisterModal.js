@@ -3,9 +3,11 @@
 import { useState, useEffect } from 'react';
 import styles from './RegisterModal.module.css';
 import Plans from "./Plans";
+import { useAuth } from '../context/AuthContext';
 
 export default function RegisterModal({ isOpen, onClose }) {
-  const [currentStep, setCurrentStep] = useState(1); // 1: basic info, 2: user type, 3: verification, 4: success
+  const { signUp } = useAuth();
+  const [currentStep, setCurrentStep] = useState(1); // 1: basic info, 2: user type, 3: success (Supabase handles verification via email link)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -17,8 +19,6 @@ export default function RegisterModal({ isOpen, onClose }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [agreeToTerms, setAgreeToTerms] = useState(false);
-  const [verificationCode, setVerificationCode] = useState('');
-  const [verificationCodeSent, setVerificationCodeSent] = useState(false);
 
   // Prevent body scroll when modal is open
   useEffect(() => {
@@ -76,73 +76,30 @@ export default function RegisterModal({ isOpen, onClose }) {
         setError('Phone number is required.');
         return;
       }
-      setCurrentStep(3);
-      /*
-      // Send verification code
-      // setIsLoading(true);
+
+      setIsLoading(true);
       try {
-        const response = await fetch('/api/auth/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
+        const { data, error } = await signUp(email, password, {
+          data: {
+            full_name: fullName,
+            phone_number: phoneNumber,
+            user_type: userType,
           },
-          body: JSON.stringify({
-            fullName,
-            email,
-            password,
-            phoneNumber,
-            userType,
-          }),
         });
 
-        if (!response.ok) {
-          throw new Error('Registration failed. Please try again.');
-        }
+        if (error) throw error;
 
-        setVerificationCodeSent(true);
+        // If successful, move to success step (which asks user to check email)
         setCurrentStep(3);
       } catch (err) {
         setError(err.message);
       } finally {
         setIsLoading(false);
-      } */
-    }
-  };
-
-  const handleVerifyCode = async (e) => {
-    e.preventDefault();
-    setError('');
-
-    if (!verificationCode.trim()) {
-      setError('Please enter the verification code.');
-      return;
-    }
-    setCurrentStep(4);
-    setIsLoading(true);
-
-    /*try {
-      const response = await fetch('/api/auth/verify', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          code: verificationCode,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Invalid verification code. Please try again.');
       }
-
-      setCurrentStep(4);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setIsLoading(false);
-    } */
+    }
   };
+
+  // Removed handleVerifyCode and handleResendCode as Supabase sends a verification link by default
 
   const handleResendCode = async () => {
     setError('');
@@ -192,17 +149,16 @@ export default function RegisterModal({ isOpen, onClose }) {
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         {/* Progress Steps */}
         <div className={styles.progressContainer}>
-          {[1, 2, 3, 4].map((step) => (
+          {[1, 2, 3].map((step) => (
             <div
               key={step}
-              className={`${styles.progressStep} ${
-                step === currentStep ? styles.active : ''
-              } ${step < currentStep ? styles.completed : ''}`}
+              className={`${styles.progressStep} ${step === currentStep ? styles.active : ''
+                } ${step < currentStep ? styles.completed : ''}`}
             >
               <div className={styles.stepCircle}>
                 {step < currentStep ? '✓' : step}
               </div>
-              {step < 4 && <div className={styles.stepLine} />}
+              {step < 3 && <div className={styles.stepLine} />}
             </div>
           ))}
         </div>
@@ -355,9 +311,8 @@ export default function RegisterModal({ isOpen, onClose }) {
                     <button
                       key={type.value}
                       type="button"
-                      className={`${styles.userTypeButton} ${
-                        userType === type.value ? styles.selected : ''
-                      }`}
+                      className={`${styles.userTypeButton} ${userType === type.value ? styles.selected : ''
+                        }`}
                       onClick={() => setUserType(type.value)}
                       disabled={isLoading}
                     >
@@ -404,80 +359,27 @@ export default function RegisterModal({ isOpen, onClose }) {
           </>
         )}
 
-        {/* Step 3: Email Verification */}
+
+        {/* Step 3: Success / Check Email */}
         {currentStep === 3 && (
-          <>
-            <div className={styles.verificationHeader}>
-              <div className={styles.verificationIcon}>📧</div>
-              <h2 className={styles.title}>Verify Your Email</h2>
-              <p className={styles.subtitle}>
-                We've sent a 6-digit code to<br />
-                <strong>{email}</strong>
-              </p>
-            </div>
-
-            <form onSubmit={handleVerifyCode} className={styles.form}>
-              {error && <div className={styles.error}>{error}</div>}
-
-              <div className={styles.formGroup}>
-                <label htmlFor="verificationCode" className={styles.label}>
-                  Enter Verification Code
-                </label>
-                <input
-                  type="text"
-                  id="verificationCode"
-                  className={styles.codeInput}
-                  placeholder="000000"
-                  value={verificationCode}
-                  onChange={(e) => setVerificationCode(e.target.value.toUpperCase())}
-                  maxLength="6"
-                  disabled={isLoading}
-                  autoComplete="off"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className={styles.submitButton}
-                disabled={isLoading || verificationCode.length !== 6}
-              >
-                {isLoading ? 'Verifying...' : 'Verify Email'}
-              </button>
-            </form>
-
-            <div className={styles.resendWrapper}>
-              <p className={styles.resendText}>Didn't receive the code?</p>
-              <button
-                className={styles.resendButton}
-                onClick={handleResendCode}
-                disabled={isLoading}
-              >
-                Resend Code
-              </button>
-            </div>
-          </>
-        )}
-
-        {/* Step 4: Success */}
-        {currentStep === 4 && (
           <>
             <div className={styles.successContainer}>
               <div className={styles.successIcon}>✓</div>
               <h2 className={styles.title}>Welcome to Qilo!</h2>
               <p className={styles.subtitle}>
-                Your email has been verified successfully.
+                We've sent a verification link to <strong>{email}</strong>.
               </p>
               <p className={styles.successMessage}>
-                Your account is now active and ready to use. Start exploring properties and opportunities today.
+                Please check your email and click the link to verify your account. Once verified, you can log in.
               </p>
-              <Plans keyValue={`${userType}s`}/>
+              <Plans keyValue={`${userType}s`} />
             </div>
 
             <button
               className={styles.submitButton}
               onClick={handleFinish}
             >
-              Get Started
+              Close
             </button>
           </>
         )}

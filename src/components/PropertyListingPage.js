@@ -4,12 +4,14 @@ import { useState, useEffect } from 'react';
 import styles from './PropertyListingPage.module.css';
 import PropertyCard from './PropertyCard';
 import MapView from './MapView';
-import sampleProperties from '@/data/properties';
+import { getProperties } from '@/lib/api';
+// import sampleProperties from '@/data/properties'; // Keeping for reference or fallback if needed
 
 export default function PropertyListingPage() {
-  const [properties, setProperties] = useState(sampleProperties);
-  const [filteredProperties, setFilteredProperties] = useState(sampleProperties);
-  const [selectedProperty, setSelectedProperty] = useState(sampleProperties[0]);
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filteredProperties, setFilteredProperties] = useState([]);
+  const [selectedProperty, setSelectedProperty] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [openDropdown, setOpenDropdown] = useState(null);
   const [filters, setFilters] = useState({
@@ -20,6 +22,48 @@ export default function PropertyListingPage() {
     baths: 0,
     location: '',
   });
+
+  // Fetch properties from API
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await getProperties();
+        // Transform data if necessary to match component expectations
+        // Backend returns images as list property.images
+        // Backend returns amenities as list property.amenities
+        // Backend returns price as string "250000"
+
+        // Add some formatting if needed or leave as is. 
+        // Existing code expects price to have $ maybe? 
+        // Logic: parseInt(property.price.replace(/[$,]/g, ''))
+        // If "250000", replace does nothing, parseInt works.
+
+        // Ensure image property exists (backend returns images list, frontend expects image for card?)
+        // PropertyCard might expect 'image' (single string)
+        const formattedData = data.map(p => ({
+          ...p,
+          // Helper to get valid image URL
+          image: p.images && p.images.length > 0
+            ? (p.images[0].startsWith('http') ? p.images[0] : `https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=80`)
+            : 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80',
+          price: `$${parseInt(p.price).toLocaleString()}`, // Format price to $250,000
+          beds: p.bedrooms,
+          baths: p.bathrooms,
+          user_type: p.role // if needed
+        }));
+
+        setProperties(formattedData);
+        setFilteredProperties(formattedData);
+        if (formattedData.length > 0) setSelectedProperty(formattedData[0]);
+      } catch (error) {
+        console.error("Failed to load properties", error);
+        // Fallback or empty state
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
 
   // Filter properties based on search and filters
   useEffect(() => {
@@ -75,7 +119,7 @@ export default function PropertyListingPage() {
             <div className={styles.mapFilterBar}>
               {/* Property Type */}
               <div className={styles.filterDropdown}>
-                <button 
+                <button
                   className={styles.filterButton}
                   onClick={() => toggleDropdown('propertyType')}
                 >
@@ -96,7 +140,7 @@ export default function PropertyListingPage() {
 
               {/* Price */}
               <div className={styles.filterDropdown}>
-                <button 
+                <button
                   className={styles.filterButton}
                   onClick={() => toggleDropdown('price')}
                 >
@@ -107,14 +151,14 @@ export default function PropertyListingPage() {
                 {openDropdown === 'price' && (
                   <div className={styles.dropdownMenu}>
                     <div className={styles.priceInputGroup}>
-                      <input 
+                      <input
                         type="number"
                         placeholder="Min"
                         value={filters.minPrice}
                         onChange={(e) => handleFilterChange('minPrice', parseInt(e.target.value) || 0)}
                       />
                       <span>-</span>
-                      <input 
+                      <input
                         type="number"
                         placeholder="Max"
                         value={filters.maxPrice}
@@ -127,7 +171,7 @@ export default function PropertyListingPage() {
 
               {/* Bedrooms */}
               <div className={styles.filterDropdown}>
-                <button 
+                <button
                   className={styles.filterButton}
                   onClick={() => toggleDropdown('beds')}
                 >
@@ -149,7 +193,7 @@ export default function PropertyListingPage() {
 
               {/* Bathrooms */}
               <div className={styles.filterDropdown}>
-                <button 
+                <button
                   className={styles.filterButton}
                   onClick={() => toggleDropdown('baths')}
                 >
@@ -170,7 +214,7 @@ export default function PropertyListingPage() {
 
               {/* Location */}
               <div className={styles.filterDropdown}>
-                <button 
+                <button
                   className={styles.filterButton}
                   onClick={() => toggleDropdown('location')}
                 >
@@ -180,7 +224,7 @@ export default function PropertyListingPage() {
                 </button>
                 {openDropdown === 'location' && (
                   <div className={styles.dropdownMenu}>
-                    <input 
+                    <input
                       type="text"
                       placeholder="Search city or area..."
                       className={styles.searchInput}
@@ -213,11 +257,10 @@ export default function PropertyListingPage() {
                 filteredProperties.map((property) => (
                   <div
                     key={property.id}
-                    className={`${styles.propertyItem} ${
-                      selectedProperty?.id === property.id
-                        ? styles.selected
-                        : ''
-                    }`}
+                    className={`${styles.propertyItem} ${selectedProperty?.id === property.id
+                      ? styles.selected
+                      : ''
+                      }`}
                     onClick={() => handlePropertySelect(property)}
                   >
                     <PropertyCard property={property} />

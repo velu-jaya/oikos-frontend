@@ -1,9 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
+import { createProperty } from '@/lib/api';
 import PropertyListingFormStyles from './PropertyListingForm.module.css';
 
-export default function PropertyListingForm() {
+export default function PropertyListingForm({ onClose }) {
+  const { user } = useAuth();
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     // Step 1: Basic Information
@@ -148,12 +153,33 @@ export default function PropertyListingForm() {
     setCurrentStep(prev => Math.max(prev - 1, 1));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateStep(currentStep)) {
-      console.log('Form submitted:', formData);
-      alert('Property listing submitted successfully!');
-      // Here you would typically send the data to your backend
+      try {
+        // Prepare data for backend
+        const propertyData = {
+          ...formData,
+          seller_id: user?.id || 'anonymous', // Should come from auth context
+          images: formData.images.map(file => file.name), // Sending filenames for now
+          // Ensure numeric values are numbers
+          price: formData.price.toString(),
+          bedrooms: parseInt(formData.bedrooms),
+          bathrooms: parseFloat(formData.bathrooms),
+          area: parseInt(formData.area),
+          year_built: parseInt(formData.yearBuilt) || null,
+          property_size: parseFloat(formData.propertySize) || null,
+          stories: parseInt(formData.stories) || null,
+        };
+
+        await createProperty(propertyData);
+        alert('Property listing submitted successfully!');
+        if (onClose) onClose();
+        router.refresh(); // Refresh to show new data if on listing page
+      } catch (error) {
+        console.error('Submission error:', error);
+        alert('Failed to submit listing. Please try again.');
+      }
     }
   };
 
@@ -163,10 +189,9 @@ export default function PropertyListingForm() {
         {Array.from({ length: totalSteps }, (_, i) => i + 1).map(step => (
           <div
             key={step}
-            className={`${PropertyListingFormStyles.step} ${
-              step === currentStep ? PropertyListingFormStyles.active :
+            className={`${PropertyListingFormStyles.step} ${step === currentStep ? PropertyListingFormStyles.active :
               step < currentStep ? PropertyListingFormStyles.completed : ''
-            }`}
+              }`}
           >
             {step}
           </div>

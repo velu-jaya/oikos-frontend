@@ -1,21 +1,57 @@
 'use client';
 
-import { useState, use } from 'react';
+import { useState, use, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import styles from './page.module.css';
-import sampleProperties from '../../../data/properties';
+import { getProperty } from '@/lib/api';
 
 export default function PropertyDetailsPage({ params }) {
   const { id } = use(params);
-  const property = sampleProperties.find((p) => p.id === parseInt(id));
-  const [selectedImage, setSelectedImage] = useState(property?.image || '');
+  const [property, setProperty] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState('');
+
+  useEffect(() => {
+    async function fetchProperty() {
+      try {
+        const data = await getProperty(id);
+        // Format data similar to listing page if needed
+        const formatted = {
+          ...data,
+          // Ensure image array exists
+          // Ensure image array exists and use valid URLs
+          images: data.images && data.images.length > 0
+            ? data.images.map(img => img.startsWith('http') ? img : `https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=80`)
+            : ['https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80'],
+          image: data.images && data.images.length > 0
+            ? (data.images[0].startsWith('http') ? data.images[0] : `https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=80`)
+            : 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80',
+          price: `$${parseInt(data.price).toLocaleString()}`,
+          amenities: data.amenities || []
+        };
+        setProperty(formatted);
+        setSelectedImage(formatted.image);
+      } catch (error) {
+        console.error("Failed to fetch property", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProperty();
+  }, [id]);
+
   const [showScheduleModal, setShowScheduleModal] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
 
+  if (loading) return <div className={styles.loading}>Loading...</div>;
+
   if (!property) {
+    const [showScheduleModal, setShowScheduleModal] = useState(false);
+    const [showContactModal, setShowContactModal] = useState(false);
+
     return (
       <div className={styles.notFound}>
         <h1>Property Not Found</h1>
@@ -24,14 +60,7 @@ export default function PropertyDetailsPage({ params }) {
     );
   }
 
-  const galleryImages = [
-    property.image,
-    property.image,
-    property.image,
-    property.image,
-    property.image,
-    property.image,
-  ];
+  const galleryImages = property.images || [property.image];
 
   const amenities = [
     { icon: 'fa-lock', name: 'Security System' },
@@ -91,9 +120,8 @@ export default function PropertyDetailsPage({ params }) {
                 {galleryImages.map((img, idx) => (
                   <button
                     key={idx}
-                    className={`${styles.thumbnail} ${
-                      selectedImage === img ? styles.active : ''
-                    }`}
+                    className={`${styles.thumbnail} ${selectedImage === img ? styles.active : ''
+                      }`}
                     onClick={() => setSelectedImage(img)}
                   >
                     <Image
@@ -153,11 +181,7 @@ export default function PropertyDetailsPage({ params }) {
             <section className={styles.description}>
               <h2>About This Property</h2>
               <p>
-                This stunning property offers the perfect blend of modern luxury and
-                comfortable living. Located in a prime neighborhood with excellent
-                schools and amenities nearby. The spacious layout features an open
-                concept living area, premium finishes, and a well-maintained outdoor
-                space. Perfect for families or professionals looking for a quality home.
+                {property.description || "No description provided."}
               </p>
             </section>
 
@@ -165,7 +189,14 @@ export default function PropertyDetailsPage({ params }) {
             <section className={styles.features}>
               <h2>Property Features</h2>
               <div className={styles.featureGrid}>
-                {propertyFeatures.map((feature, idx) => (
+                {[
+                  { label: 'Bedrooms', value: property.beds },
+                  { label: 'Bathrooms', value: property.baths },
+                  { label: 'Property Size', value: `${property.area} sqft` },
+                  { label: 'Property Type', value: property.property_type?.replace('_', ' ') || 'N/A' },
+                  { label: 'Year Built', value: property.year_built || 'N/A' },
+                  { label: 'Parking Spaces', value: property.parking || 'N/A' },
+                ].map((feature, idx) => (
                   <div key={idx} className={styles.featureItem}>
                     <span className={styles.featureLabel}>{feature.label}</span>
                     <span className={styles.featureValue}>{feature.value}</span>
@@ -178,12 +209,16 @@ export default function PropertyDetailsPage({ params }) {
             <section className={styles.amenities}>
               <h2>Amenities</h2>
               <div className={styles.amenitiesGrid}>
-                {amenities.map((amenity, idx) => (
-                  <div key={idx} className={styles.amenityCard}>
-                    <div className={styles.amenityIcon}><i className={`fas ${amenity.icon}`}></i></div>
-                    <div className={styles.amenityName}>{amenity.name}</div>
-                  </div>
-                ))}
+                {property.amenities && property.amenities.length > 0 ? (
+                  property.amenities.map((amenity, idx) => (
+                    <div key={idx} className={styles.amenityCard}>
+                      <div className={styles.amenityIcon}><i className="fas fa-check-circle"></i></div>
+                      <div className={styles.amenityName}>{amenity}</div>
+                    </div>
+                  ))
+                ) : (
+                  <p>No amenities listed.</p>
+                )}
               </div>
             </section>
 
@@ -209,7 +244,7 @@ export default function PropertyDetailsPage({ params }) {
               <h2>Location on Map</h2>
               <div className={styles.mapContainer}>
                 <div className={styles.mapPlaceholder}>
-                  📍 {property.city} - Interactive Map Coming Soon
+                  📍 {property.city}, {property.state} {property.zip_code} - Interactive Map Coming Soon
                 </div>
               </div>
             </section>
@@ -222,20 +257,17 @@ export default function PropertyDetailsPage({ params }) {
               <div className={styles.sellerInfo}>
                 <div className={styles.sellerAvatar}>👨‍💼</div>
                 <div className={styles.sellerDetails}>
-                  <h3>Velu Jaya</h3>
-                  <p>Real Estate Agent</p>
-                  <span className={styles.verified}>✓ Verified</span>
+                  <h3>{property.contact_name || "Seller"}</h3>
+                  <p>Property Owner</p>
+                  {/* <span className={styles.verified}>✓ Verified</span> */}
                 </div>
               </div>
 
-              <button className={styles.btnPrimary}>
-                <i className="fas fa-phone"></i> Call Seller
+              <button className={styles.btnPrimary} onClick={() => window.location.href = `tel:${property.contact_phone}`}>
+                <i className="fas fa-phone"></i> {property.contact_phone || "Call Seller"}
               </button>
-              <button className={styles.btnSecondary}>
-                <i className="fas fa-message"></i> Message
-              </button>
-              <button className={styles.btnSecondary}>
-                <i className="fas fa-comments"></i> Chat with Qilo
+              <button className={styles.btnSecondary} onClick={() => window.location.href = `mailto:${property.contact_email}`}>
+                <i className="fas fa-envelope"></i> Email: {property.contact_email || "N/A"}
               </button>
             </div>
 

@@ -1,9 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useAuth } from '@/context/AuthContext';
+import { createProperty } from '@/lib/api';
 import styles from './PropertyListingModal.module.css';
 
 export default function PropertyListingModal({ isOpen, onClose }) {
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('property');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -13,8 +16,12 @@ export default function PropertyListingModal({ isOpen, onClose }) {
   const [formData, setFormData] = useState({
     // Property Tab
     address: '',
-    
+
     // Basic Information Tab
+    title: '',
+    price: '',
+    description: '',
+    propertyType: '',
     bedrooms: '',
     bathrooms: '',
     squareFeet: '',
@@ -31,6 +38,14 @@ export default function PropertyListingModal({ isOpen, onClose }) {
     roofCovering: '',
     amenities: [],
     hoaFees: '',
+
+    // Contact Info (New)
+    contactName: '',
+    contactEmail: '',
+    contactPhone: '',
+
+    // Images (New)
+    images: [],
   });
 
   const [selectedAmenities, setSelectedAmenities] = useState([]);
@@ -80,41 +95,16 @@ export default function PropertyListingModal({ isOpen, onClose }) {
 
   const validateAddress = async () => {
     setError('');
-    
+
     if (!formData.address.trim()) {
       setError('Please enter a valid address.');
       return false;
     }
 
-    setIsLoading(true);
-    try {
-      // TODO: Replace with actual address validation API
-      const response = await fetch('/api/validate-address', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ address: formData.address })
-      });
-
-      if (response.ok) {
-        setAddressValidated(true);
-        setActiveTab('basicInfo');
-        return true;
-      } else {
-        setError('Address validation failed. Please check and try again.');
-        return false;
-      }
-    } catch (err) {
-      // Demo mode: allow address validation without actual API
-      if (formData.address.trim().length > 5) {
-        setAddressValidated(true);
-        setActiveTab('basicInfo');
-        return true;
-      }
-      setError('Address validation failed. Please try again.');
-      return false;
-    } finally {
-      setIsLoading(false);
-    }
+    // Bypass validation for now as requested
+    setAddressValidated(true);
+    setActiveTab('basicInfo');
+    return true;
   };
 
   const handleSubmit = async (e) => {
@@ -136,24 +126,44 @@ export default function PropertyListingModal({ isOpen, onClose }) {
     setIsLoading(true);
     try {
       // TODO: Replace with actual API endpoint
-      const response = await fetch('/api/property/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          amenities: selectedAmenities
-        })
-      });
+      // Prepare data for backend
+      const propertyData = {
+        // Explicitly map all fields to match backend PropertyCreate schema
+        seller_id: user?.id || 'anonymous',
+        title: formData.title,
+        description: formData.description,
+        price: formData.price.toString(),
+        property_type: formData.propertyType || 'single_family', // Map camelCase to snake_case
+        bedrooms: parseInt(formData.bedrooms),
+        bathrooms: parseFloat(formData.bathrooms),
+        area: parseInt(formData.squareFeet) || 0,
+        year_built: parseInt(formData.yearBuilt) || null,
+        property_size: parseFloat(formData.propertySize) || 0,
 
-      if (response.ok) {
-        setSuccessMessage('Property listing created successfully!');
-        setTimeout(() => {
-          resetForm();
-          onClose();
-        }, 2000);
-      } else {
-        setError('Failed to create property listing. Please try again.');
-      }
+        // Address splitting (Simple assumption for now)
+        address: formData.address,
+        city: 'Austin', // Default/Mock for now as form implies single address string
+        state: 'TX',    // Default/Mock 
+        zip_code: '78701', // Default/Mock
+
+        amenities: selectedAmenities,
+
+        // Contact Info
+        contact_name: formData.contactName || '',
+        contact_email: formData.contactEmail || '',
+        contact_phone: formData.contactPhone || '',
+
+        // Images 
+        images: formData.images.map(f => f.name)
+      };
+
+      await createProperty(propertyData);
+
+      setSuccessMessage('Property listing created successfully!');
+      setTimeout(() => {
+        resetForm();
+        onClose();
+      }, 2000);
     } catch (err) {
       setError('An error occurred. Please try again.');
     } finally {
@@ -276,6 +286,61 @@ export default function PropertyListingModal({ isOpen, onClose }) {
                 </p>
 
                 <form className={styles.formContainer} onSubmit={handleSubmit}>
+                  {/* Row 0 - Title & Price (New Fields) */}
+                  <div className={styles.formRow}>
+                    <div className={styles.formGroup}>
+                      <label htmlFor="title">Property Title *</label>
+                      <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        value={formData.title}
+                        onChange={handleInputChange}
+                        placeholder="e.g., Luxury Downtown Condo"
+                      />
+                    </div>
+                    <div className={styles.formGroup}>
+                      <label htmlFor="price">Price ($) *</label>
+                      <input
+                        type="number"
+                        id="price"
+                        name="price"
+                        value={formData.price}
+                        onChange={handleInputChange}
+                        placeholder="e.g., 500000"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Row 0.5 - Description & Type */}
+                  <div className={styles.formRow}>
+                    <div className={styles.formGroup}>
+                      <label htmlFor="propertyType">Property Type *</label>
+                      <select
+                        id="propertyType"
+                        name="propertyType"
+                        value={formData.propertyType}
+                        onChange={handleInputChange}
+                      >
+                        <option value="">Select type</option>
+                        <option value="house">House</option>
+                        <option value="apartment">Apartment</option>
+                        <option value="condo">Condo</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className={styles.formGroup}>
+                    <label htmlFor="description">Description</label>
+                    <textarea
+                      id="description"
+                      name="description"
+                      value={formData.description}
+                      onChange={handleInputChange}
+                      rows="3"
+                      placeholder="Describe your property..."
+                    />
+                  </div>
+
                   {/* Row 1 */}
                   <div className={styles.formRow}>
                     <div className={styles.formGroup}>
@@ -539,6 +604,43 @@ export default function PropertyListingModal({ isOpen, onClose }) {
                   </div>
 
                   {/* Action Buttons */}
+                  {/* Contact Information */}
+                  <div className={styles.sectionHeader}>
+                    <h3>Contact Information</h3>
+                  </div>
+                  <div className={styles.formRow}>
+                    <div className={styles.formGroup}>
+                      <label>Name</label>
+                      <input type="text" name="contactName" value={formData.contactName} onChange={handleInputChange} placeholder="Your Name" />
+                    </div>
+                    <div className={styles.formGroup}>
+                      <label>Email</label>
+                      <input type="email" name="contactEmail" value={formData.contactEmail} onChange={handleInputChange} placeholder="email@example.com" />
+                    </div>
+                  </div>
+                  <div className={styles.formGroup}>
+                    <label>Phone</label>
+                    <input type="tel" name="contactPhone" value={formData.contactPhone} onChange={handleInputChange} placeholder="(555) 123-4567" />
+                  </div>
+
+                  {/* Image Upload */}
+                  <div className={styles.sectionHeader}>
+                    <h3>Images</h3>
+                  </div>
+                  <div className={styles.formGroup}>
+                    <label>Upload Images</label>
+                    <input
+                      type="file"
+                      multiple
+                      accept="image/*"
+                      onChange={(e) => {
+                        const files = Array.from(e.target.files);
+                        setFormData(prev => ({ ...prev, images: [...prev.images, ...files] }));
+                      }}
+                    />
+                    {formData.images.length > 0 && <p>{formData.images.length} images selected</p>}
+                  </div>
+
                   <div className={styles.buttonGroup}>
                     <button
                       type="button"

@@ -4,10 +4,12 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import styles from "../app/page.module.css";
 import { useAuth } from "../context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
-  const { setLoginModalOpen, setRegisterModalOpen } = useAuth();
+  const { setLoginModalOpen, setRegisterModalOpen, user, signOut } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -27,25 +29,42 @@ export default function Header() {
           <li><a href="/seller">Seller</a></li>
           <li><a href="/agent">Real Estate Expert</a></li>
           <li><a href="/vendor">Vendor</a></li>
-          
+
           <li><a href="/blog">Blog</a></li>
         </ul>
       </nav>
       <div className={styles.actions}>
-        <button 
-          className={styles.login}
-          onClick={() => setLoginModalOpen(true)}
-          
-        >
-          Login
-        </button>
-        <button 
-          className={styles.register}
-          onClick={() => setRegisterModalOpen(true)}
-          
-        >
-          Register
-        </button>
+        {user ? (
+          <>
+            <button
+              className={styles.login}
+              onClick={() => router.push('/dashboard')}
+            >
+              Dashboard
+            </button>
+            <button
+              className={styles.register}
+              onClick={() => signOut()}
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              className={styles.login}
+              onClick={() => setLoginModalOpen(true)}
+            >
+              Login
+            </button>
+            <button
+              className={styles.register}
+              onClick={() => setRegisterModalOpen(true)}
+            >
+              Register
+            </button>
+          </>
+        )}
       </div>
     </header>
   );

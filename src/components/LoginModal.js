@@ -2,8 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import styles from './LoginModal.module.css';
+import { useAuth } from '../context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 export default function LoginModal({ isOpen, onClose }) {
+  const { signIn } = useAuth();
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -26,36 +30,29 @@ export default function LoginModal({ isOpen, onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    
+
     if (!agreeToTerms) {
       setError('You must agree to the Terms and User Agreement to continue.');
       return;
     }
-    
+
     setIsLoading(true);
 
     try {
-      // Replace with your actual login API endpoint
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const { data, error } = await signIn(email, password);
 
-      if (!response.ok) {
-        throw new Error('Login failed. Please try again.');
+      if (error) {
+        throw error;
       }
 
-      const data = await response.json();
       console.log('Login successful:', data);
-      
+
       // Reset form and close modal
       setEmail('');
       setPassword('');
       setAgreeToTerms(false);
       onClose();
+      router.push('/dashboard');
     } catch (err) {
       setError(err.message);
     } finally {

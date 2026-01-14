@@ -1,15 +1,39 @@
 'use client';
 
 import { useState } from 'react';
+import { useAuth } from '@/context/AuthContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import PropertyListingForm from '@/components/PropertyListingForm';
 import PropertyListingModal from '@/components/PropertyListingModal';
 import styles from './page.module.css';
 
 export default function SellerPage() {
+  const { user, setLoginModalOpen } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeAccordion, setActiveAccordion] = useState(null);
+
+
+
+  const handleStartListing = () => {
+    if (!user) {
+      // User is not logged in, open the login modal
+      setLoginModalOpen(true);
+      return;
+    }
+
+    // Check for seller role
+    // Role is commonly stored in user_metadata in Supabase
+    // Check for seller role
+    // RegisterModal saves it as 'user_type' in metadata
+    const userRole = user.user_metadata?.user_type || user.user_metadata?.role || user.role;
+
+    if (userRole !== 'seller') {
+      alert("Access Restricted: Only registered Sellers can list properties.\n\nPlease sign out and create a Seller account.");
+      return;
+    }
+
+    setIsModalOpen(true);
+  };
 
   const toggleAccordion = (index) => {
     setActiveAccordion(activeAccordion === index ? null : index);
@@ -161,7 +185,7 @@ export default function SellerPage() {
               <p className={styles.heroDescription}>
                 List your property and connect with genuine buyers faster. Our platform helps you showcase your property, manage enquiries, and close deals smoothly.
               </p>
-              <button className={styles.ctaButton} onClick={() => setIsModalOpen(true)}>
+              <button className={styles.ctaButton} onClick={handleStartListing}>
                 Start Listing Now
               </button>
             </div>
@@ -233,7 +257,7 @@ export default function SellerPage() {
         </section>
 
         {/* Listing Form Section */}
-      { /* <section className={`${styles.formSection}`}>
+        { /* <section className={`${styles.formSection}`}>
           <div className={styles.container}>
             <div className={styles.sectionHeader}>
               <h2>Create Your Listing</h2>
@@ -279,15 +303,27 @@ export default function SellerPage() {
             <div className={styles.ctaContent}>
               <h2>Ready to Sell Your Property?</h2>
               <p>Join thousands of successful sellers who have found their perfect buyers on Qilo</p>
-              <button className={styles.ctaButtonLarge} onClick={() => setIsModalOpen(true)}>
+              <button className={styles.ctaButtonLarge} onClick={handleStartListing}>
                 List Your Property Today
               </button>
             </div>
           </div>
         </section>
       </main>
-      <PropertyListingModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
+      {/* Modal for Property Listing Form */}
+      {
+        isModalOpen && (
+          <div className={styles.modalOverlay} onClick={() => setIsModalOpen(false)}>
+            <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+              <button className={styles.closeButton} onClick={() => setIsModalOpen(false)}>✕</button>
+              <PropertyListingModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            </div>
+          </div>
+        )
+      }
+
       <Footer />
-    </div>
+    </div >
   );
 }
