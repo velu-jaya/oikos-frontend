@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { createProperty } from '@/lib/api';
+import { createProperty, updateProperty } from '@/lib/api';
+import { supabase } from '@/lib/supabaseClient';
 import styles from './PropertyListingModal.module.css';
 
-export default function PropertyListingModal({ isOpen, onClose }) {
+export default function PropertyListingModal({ isOpen, onClose, isEditMode = false, propertyToEdit = null }) {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('property');
   const [isLoading, setIsLoading] = useState(false);
@@ -25,6 +26,7 @@ export default function PropertyListingModal({ isOpen, onClose }) {
     bedrooms: '',
     bathrooms: '',
     squareFeet: '',
+    yearBuilt: '',
     propertySize: '',
     homeStyle: '',
     levels: '',
@@ -46,9 +48,49 @@ export default function PropertyListingModal({ isOpen, onClose }) {
 
     // Images (New)
     images: [],
+    imageUrl: '',
   });
 
   const [selectedAmenities, setSelectedAmenities] = useState([]);
+
+  // Load data for edit mode
+  useEffect(() => {
+    if (isOpen && isEditMode && propertyToEdit) {
+      setFormData({
+        address: propertyToEdit.address || '',
+        title: propertyToEdit.title || '',
+        price: propertyToEdit.price?.replace(/[^0-9.]/g, '') || '',
+        description: propertyToEdit.description || '',
+        propertyType: propertyToEdit.property_type || '', // Matches snake_case from backend
+        bedrooms: propertyToEdit.bedrooms || '',
+        bathrooms: propertyToEdit.bathrooms || '',
+        squareFeet: propertyToEdit.area || '',
+        yearBuilt: propertyToEdit.year_built || '',
+        propertySize: propertyToEdit.property_size || '',
+        homeStyle: propertyToEdit.style || '', // Assuming style mapped or defaulting
+        levels: propertyToEdit.stories || '',
+        garage: propertyToEdit.parking ? 'yes' : 'no',
+        garageType: '',
+        garageStalls: propertyToEdit.parking || '',
+        patio: '', // Data might be missing in simple schema, default empty
+        heating: '',
+        cooling: '',
+        exteriorCovering: '',
+        roofCovering: '',
+        amenities: [],
+        hoaFees: '',
+        contactName: propertyToEdit.contact_name || '',
+        contactEmail: propertyToEdit.contact_email || '',
+        contactPhone: propertyToEdit.contact_phone || '',
+        images: [],
+        imageUrl: propertyToEdit.images && propertyToEdit.images.length > 0 ? propertyToEdit.images[0] : ''
+      });
+      setSelectedAmenities(propertyToEdit.amenities || []);
+      setAddressValidated(true);
+    } else if (isOpen && !isEditMode) {
+      resetForm();
+    }
+  }, [isOpen, isEditMode, propertyToEdit]);
 
   // Prevent body scroll when modal is open
   useEffect(() => {
@@ -107,6 +149,32 @@ export default function PropertyListingModal({ isOpen, onClose }) {
     return true;
   };
 
+  const uploadImages = async (files) => {
+    const uploadedUrls = [];
+
+    for (const file of files) {
+      const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '')}`;
+      const { data, error } = await supabase.storage
+        .from('property-images')
+        .upload(fileName, file);
+
+      if (error) {
+        console.error('Error uploading image:', error);
+        continue;
+      }
+
+      const { data: publicUrlData } = supabase.storage
+        .from('property-images')
+        .getPublicUrl(fileName);
+
+      if (publicUrlData) {
+        uploadedUrls.push(publicUrlData.publicUrl);
+      }
+    }
+
+    return uploadedUrls;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -125,7 +193,23 @@ export default function PropertyListingModal({ isOpen, onClose }) {
 
     setIsLoading(true);
     try {
-      // TODO: Replace with actual API endpoint
+      // Upload Images first
+      let allImageUrls = [];
+
+      // 1. Add manual URL if present
+      if (formData.imageUrl) {
+        allImageUrls.push(formData.imageUrl);
+      }
+
+      // 2. Upload files to Supabase and get URLs
+      if (formData.images.length > 0) {
+        const uploadedUrls = await uploadImages(formData.images);
+        allImageUrls = [...allImageUrls, ...uploadedUrls];
+      } else if (isEditMode && propertyToEdit?.images && !formData.imageUrl) {
+        // Keep existing images if no new ones uploaded and no manual URL override
+        allImageUrls = propertyToEdit.images;
+      }
+
       // Prepare data for backend
       const propertyData = {
         // Explicitly map all fields to match backend PropertyCreate schema
@@ -133,18 +217,21 @@ export default function PropertyListingModal({ isOpen, onClose }) {
         title: formData.title,
         description: formData.description,
         price: formData.price.toString(),
-        property_type: formData.propertyType || 'single_family', // Map camelCase to snake_case
+        property_type: formData.propertyType || 'single_family',
         bedrooms: parseInt(formData.bedrooms),
         bathrooms: parseFloat(formData.bathrooms),
         area: parseInt(formData.squareFeet) || 0,
         year_built: parseInt(formData.yearBuilt) || null,
         property_size: parseFloat(formData.propertySize) || 0,
+        stories: parseInt(formData.levels) || 1,
+        // Parking is string in backend, combining info or just sending count as string
+        parking: formData.garage === 'yes' ? `${formData.garageStalls} spaces` : 'None',
 
         // Address splitting (Simple assumption for now)
         address: formData.address,
-        city: 'Austin', // Default/Mock for now as form implies single address string
-        state: 'TX',    // Default/Mock 
-        zip_code: '78701', // Default/Mock
+        city: 'Austin',
+        state: 'TX',
+        zip_code: '78701',
 
         amenities: selectedAmenities,
 
@@ -153,18 +240,26 @@ export default function PropertyListingModal({ isOpen, onClose }) {
         contact_email: formData.contactEmail || '',
         contact_phone: formData.contactPhone || '',
 
-        // Images 
-        images: formData.images.map(f => f.name)
+        // Final Image List
+        images: allImageUrls
       };
 
-      await createProperty(propertyData);
+      if (isEditMode && propertyToEdit) {
+        await updateProperty(propertyToEdit.id, propertyData);
+        setSuccessMessage('Property listing updated successfully!');
+      } else {
+        await createProperty(propertyData);
+        setSuccessMessage('Property listing created successfully!');
+      }
 
-      setSuccessMessage('Property listing created successfully!');
       setTimeout(() => {
         resetForm();
         onClose();
-      }, 2000);
+        // Force refresh if needed, but dashboard might handle state update
+        if (isEditMode) window.location.reload();
+      }, 1000);
     } catch (err) {
+      console.error(err);
       setError('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);
@@ -174,6 +269,10 @@ export default function PropertyListingModal({ isOpen, onClose }) {
   const resetForm = () => {
     setFormData({
       address: '',
+      title: '',
+      price: '',
+      description: '',
+      propertyType: '',
       bedrooms: '',
       bathrooms: '',
       squareFeet: '',
@@ -190,6 +289,11 @@ export default function PropertyListingModal({ isOpen, onClose }) {
       roofCovering: '',
       amenities: [],
       hoaFees: '',
+      contactName: '',
+      contactEmail: '',
+      contactPhone: '',
+      images: [],
+      imageUrl: ''
     });
     setSelectedAmenities([]);
     setAddressValidated(false);
@@ -209,8 +313,8 @@ export default function PropertyListingModal({ isOpen, onClose }) {
         </button>
 
         <div className={styles.modalHeader}>
-          <h2>Create Your Property Listing</h2>
-          <p>Fill in your property details step by step</p>
+          <h2>{isEditMode ? 'Edit Property Listing' : 'Create Your Property Listing'}</h2>
+          <p>{isEditMode ? 'Update your property details' : 'Fill in your property details step by step'}</p>
         </div>
 
         <div className={styles.tabsContainer}>
@@ -271,7 +375,7 @@ export default function PropertyListingModal({ isOpen, onClose }) {
                     className={styles.validateButton}
                     disabled={isLoading || !formData.address.trim()}
                   >
-                    {isLoading ? 'Validating...' : 'Validate & Continue'}
+                    {isEditMode ? 'Validate & Continue' : (isLoading ? 'Validating...' : 'Validate & Continue')}
                   </button>
                 </form>
               </div>
@@ -382,6 +486,19 @@ export default function PropertyListingModal({ isOpen, onClose }) {
                         onChange={handleInputChange}
                         placeholder="e.g., 2500"
                         min="0"
+                      />
+                    </div>
+                    <div className={styles.formGroup}>
+                      <label htmlFor="yearBuilt">Year Built</label>
+                      <input
+                        type="number"
+                        id="yearBuilt"
+                        name="yearBuilt"
+                        value={formData.yearBuilt}
+                        onChange={handleInputChange}
+                        placeholder="e.g., 2020"
+                        min="1800"
+                        max={new Date().getFullYear()}
                       />
                     </div>
                     <div className={styles.formGroup}>
@@ -628,7 +745,7 @@ export default function PropertyListingModal({ isOpen, onClose }) {
                     <h3>Images</h3>
                   </div>
                   <div className={styles.formGroup}>
-                    <label>Upload Images</label>
+                    <label>Upload Images (Local Only)</label>
                     <input
                       type="file"
                       multiple
@@ -657,7 +774,7 @@ export default function PropertyListingModal({ isOpen, onClose }) {
                       className={styles.submitButton}
                       disabled={isLoading}
                     >
-                      {isLoading ? 'Creating Listing...' : 'Create Listing'}
+                      {isLoading ? (isEditMode ? 'Updating...' : 'Creating...') : (isEditMode ? 'Update Listing' : 'Create Listing')}
                     </button>
                   </div>
                 </form>

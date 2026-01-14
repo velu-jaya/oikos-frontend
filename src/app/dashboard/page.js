@@ -7,7 +7,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import styles from './dashboard.module.css';
-import { getProperties } from '@/lib/api';
+import { getProperties, deleteProperty } from '@/lib/api';
+import PropertyListingModal from '@/components/PropertyListingModal';
 
 export default function Dashboard() {
     const { user, signOut, loading } = useAuth();
@@ -19,6 +20,8 @@ export default function Dashboard() {
     });
     const [myProperties, setMyProperties] = useState([]);
     const [isLoadingData, setIsLoadingData] = useState(true);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [propertyToEdit, setPropertyToEdit] = useState(null);
 
     useEffect(() => {
         if (!loading && !user) {
@@ -53,7 +56,31 @@ export default function Dashboard() {
         }
 
         fetchData();
+        fetchData();
     }, [user, loading]);
+
+    const handleEdit = (property) => {
+        setPropertyToEdit(property);
+        setIsEditModalOpen(true);
+    };
+
+    const handleDelete = async (propertyId) => {
+        if (confirm('Are you sure you want to delete this property? This action cannot be undone.')) {
+            try {
+                await deleteProperty(propertyId);
+                // Remove from local state
+                setMyProperties(prev => prev.filter(p => p.id !== propertyId));
+                setStats(prev => ({
+                    ...prev,
+                    total: prev.total - 1,
+                    active: prev.active - 1
+                }));
+            } catch (error) {
+                console.error("Failed to delete property:", error);
+                alert("Failed to delete property. Please try again.");
+            }
+        }
+    };
 
     if (loading) {
         return (
@@ -216,16 +243,46 @@ export default function Dashboard() {
                                                 <p style={{ margin: 0, color: '#666', fontSize: '0.9rem' }}>{property.city}, {property.state}</p>
                                                 <p style={{ margin: '0.25rem 0 0 0', fontWeight: 'bold', color: '#0066FF' }}>{property.price}</p>
                                             </div>
-                                            <Link href={`/property/${property.id}`} style={{
-                                                padding: '0.5rem 1rem',
-                                                border: '1px solid #ddd',
-                                                borderRadius: '6px',
-                                                color: '#666',
-                                                textDecoration: 'none',
-                                                fontSize: '0.9rem'
-                                            }}>
-                                                View
-                                            </Link>
+                                            <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                                <Link href={`/property/${property.id}`} style={{
+                                                    padding: '0.5rem 1rem',
+                                                    border: '1px solid #ddd',
+                                                    borderRadius: '6px',
+                                                    color: '#666',
+                                                    textDecoration: 'none',
+                                                    fontSize: '0.9rem'
+                                                }}>
+                                                    View
+                                                </Link>
+                                                <button
+                                                    onClick={() => handleEdit(property)}
+                                                    style={{
+                                                        padding: '0.5rem 1rem',
+                                                        border: '1px solid #0066FF',
+                                                        borderRadius: '6px',
+                                                        color: '#0066FF',
+                                                        background: 'transparent',
+                                                        fontSize: '0.9rem',
+                                                        cursor: 'pointer'
+                                                    }}
+                                                >
+                                                    <i className="fas fa-edit"></i> Edit
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDelete(property.id)}
+                                                    style={{
+                                                        padding: '0.5rem 1rem',
+                                                        border: '1px solid #dc3545',
+                                                        borderRadius: '6px',
+                                                        color: '#dc3545',
+                                                        background: 'transparent',
+                                                        fontSize: '0.9rem',
+                                                        cursor: 'pointer'
+                                                    }}
+                                                >
+                                                    <i className="fas fa-trash"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
@@ -247,6 +304,16 @@ export default function Dashboard() {
                 </div>
             </main>
             <Footer />
+            {isEditModalOpen && (
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 1000 }}>
+                    <PropertyListingModal
+                        isOpen={isEditModalOpen}
+                        onClose={() => setIsEditModalOpen(false)}
+                        isEditMode={true}
+                        propertyToEdit={propertyToEdit}
+                    />
+                </div>
+            )}
         </div>
     );
 }

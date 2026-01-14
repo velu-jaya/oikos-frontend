@@ -81,12 +81,12 @@ export default function PropertyDetailsPage({ params }) {
   ];
 
   const propertyFeatures = [
-    { label: 'Bedrooms', value: property.beds },
-    { label: 'Bathrooms', value: property.baths },
+    { label: 'Bedrooms', value: property.bedrooms },
+    { label: 'Bathrooms', value: property.bathrooms },
     { label: 'Property Size', value: `${property.area} sqft` },
-    { label: 'Property Type', value: 'House' },
-    { label: 'Year Built', value: '2018' },
-    { label: 'Parking Spaces', value: '2' },
+    { label: 'Property Type', value: property.property_type?.replace('_', ' ') || 'N/A' },
+    { label: 'Year Built', value: property.year_built || 'N/A' },
+    { label: 'Parking Spaces', value: property.parking || 'N/A' },
   ];
 
   return (
@@ -156,14 +156,14 @@ export default function PropertyDetailsPage({ params }) {
                 <div className={styles.stat}>
                   <div className={styles.statIcon}><i className="fas fa-bed"></i></div>
                   <div className={styles.statContent}>
-                    <div className={styles.statValue}>{property.beds}</div>
+                    <div className={styles.statValue}>{property.bedrooms}</div>
                     <div className={styles.statLabel}>Bedrooms</div>
                   </div>
                 </div>
                 <div className={styles.stat}>
                   <div className={styles.statIcon}><i className="fas fa-bath"></i></div>
                   <div className={styles.statContent}>
-                    <div className={styles.statValue}>{property.baths}</div>
+                    <div className={styles.statValue}>{property.bathrooms}</div>
                     <div className={styles.statLabel}>Bathrooms</div>
                   </div>
                 </div>

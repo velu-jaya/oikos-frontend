@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import styles from "../app/page.module.css";
 
@@ -6,9 +5,9 @@ export default function PropertyCard({ property }) {
   return (
     <article className={styles.propCard}>
       <div className={styles.propImage}>
-        <Image src={property.image} alt={property.title} width={360} height={220} />
-           <div className={styles.priceBadge}>{property.price}</div>
-           {property.featured && <div className={styles.featureTag}>FEATURED</div>}
+        <img src={property.image} alt={property.title} style={{ width: '100%', height: '220px', objectFit: 'cover' }} />
+        <div className={styles.priceBadge}>{property.price}</div>
+        {property.featured && <div className={styles.featureTag}>FEATURED</div>}
       </div>
       <div className={styles.propBody}>
         <h3>{property.title}</h3>

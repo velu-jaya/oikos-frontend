@@ -50,3 +50,41 @@ export async function getProperty(id) {
         throw error;
     }
 }
+
+export async function updateProperty(id, propertyData) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/properties/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(propertyData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Failed to update property:', error);
+        throw error;
+    }
+}
+
+export async function deleteProperty(id) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/properties/${id}`, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Failed to delete property:', error);
+        throw error;
+    }
+}
