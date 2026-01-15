@@ -363,3 +363,26 @@
         min-height: 100vh;
     }
 }
+.uploadButton {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background: #f3f4f6;
+    color: #6b7280;
+    border: 1px solid #e5e7eb;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 1.2rem;
+}
+
+.uploadButton:hover {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.hiddenInput {
+    display: none;
+}

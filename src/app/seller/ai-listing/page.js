@@ -13,7 +13,7 @@ export default function AIListingPage() {
         {
             id: 1,
             type: 'ai',
-            text: "Hello! I'm Oikos AI. I'll help you create a stunning listing. Let's build your page in real-time. First, what is the property address?"
+            text: "Hello! I'm Qilo AI. I'll help you create a stunning listing. Let's build your page in real-time. First, what is the property address?"
         }
     ]);
 
@@ -36,6 +36,7 @@ export default function AIListingPage() {
 
     const [inputValue, setInputValue] = useState('');
     const [isTyping, setIsTyping] = useState(false);
+    const [chatStep, setChatStep] = useState('ADDRESS'); // ADDRESS, STATS, DESCRIPTION, FINISHED
 
     // Real-time Listing State
     const [listingData, setListingData] = useState({
@@ -70,35 +71,43 @@ export default function AIListingPage() {
         };
 
         setMessages(prev => [...prev, newMessage]);
-        const currentInput = inputValue; // Capture for basic parsing logic
+        const currentInput = inputValue; // Capture for processing
         setInputValue('');
         setIsTyping(true);
 
         // Simulate AI response & Live Preview Updates
         setTimeout(() => {
             let aiResponseText = "";
+            let nextStep = chatStep;
 
-            // Step-based Logic (Simplified for Demo)
-            if (messages.length === 1) {
-                // Updated Address & Fetch Image
+            // Step-based Logic
+            if (chatStep === 'ADDRESS') {
+                // Update Address
                 setListingData(prev => ({
                     ...prev,
                     address: currentInput,
-                    image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80", // Standard luxury home image
+                    // Only set image if not already uploaded by user
+                    image: prev.image || "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
                     price: "$850,000" // Estimated Price
                 }));
                 aiResponseText = "I've located the property! I've also pulled some public records and estimated a market value of $850,000. \n\nNow, let's verify the details. I see it listed as 4 beds and 3 baths. Is that correct? If not, please correct me.";
+                nextStep = 'STATS';
             }
-            else if (messages.length === 3) {
-                // Update Stats based on input (Basic parsing or just dummy update)
-                // Check if user corrected stats
+            else if (chatStep === 'STATS') {
+                // Parse and Update Stats
                 const userText = currentInput.toLowerCase();
-                let beds = "4";
-                let baths = "3";
+                let beds = listingData.beds !== '-' ? listingData.beds : "4";
+                let baths = listingData.baths !== '-' ? listingData.baths : "3";
                 let sqft = "2,400";
 
-                if (userText.includes("bed")) beds = userText.match(/(\d+)\s*bed/)?.[1] || "4";
-                if (userText.includes("bath")) baths = userText.match(/(\d+)\s*bath/)?.[1] || "3";
+                // Simple regex to catch numbers before keywords
+                const bedMatch = userText.match(/(\d+)\s*bed/);
+                const bathMatch = userText.match(/(\d+)\s*bath/);
+                const sqftMatch = userText.match(/(\d+[,.]?\d*)\s*sq/);
+
+                if (bedMatch) beds = bedMatch[1];
+                if (bathMatch) baths = bathMatch[1];
+                if (sqftMatch) sqft = sqftMatch[1];
 
                 setListingData(prev => ({
                     ...prev,
@@ -109,8 +118,9 @@ export default function AIListingPage() {
                 }));
 
                 aiResponseText = `Updated! I've set it to ${beds} beds and ${baths} baths. \n\nNow for the description. What makes this home special? Mention things like "renovated kitchen", "pool", or "quiet neighborhood".`;
+                nextStep = 'DESCRIPTION';
             }
-            else if (messages.length === 5) {
+            else if (chatStep === 'DESCRIPTION') {
                 // Generate Description
                 const desc = `Step into this breathtaking ${listingData.beds}-bedroom sanctuary located at ${listingData.address}. ${currentInput.charAt(0).toUpperCase() + currentInput.slice(1)}. \n\nThis home offers a perfect blend of luxury and comfort, featuring spacious living areas and modern finishes throughout. Don't miss this rare opportunity!`;
 
@@ -120,8 +130,9 @@ export default function AIListingPage() {
                 }));
 
                 aiResponseText = "I've drafted a description highlighting those features! Look at the preview on the right. \n\nWe are almost done. Does the description look good, or should we tweak the tone?";
+                nextStep = 'FINISHED';
             }
-            else {
+            else if (chatStep === 'FINISHED') {
                 aiResponseText = "Great! Your listing is shaping up perfectly. Would you like to publish this draft or schedule a professional photography session?";
             }
 
@@ -132,8 +143,38 @@ export default function AIListingPage() {
             };
 
             setMessages(prev => [...prev, aiResponse]);
+            setChatStep(nextStep);
             setIsTyping(false);
-        }, 1500);
+        }, 1200);
+    };
+
+    const fileInputRef = useRef(null);
+
+    const handleImageUpload = (e) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const imageUrl = URL.createObjectURL(file);
+
+            // Update listing data immediately
+            setListingData(prev => ({
+                ...prev,
+                image: imageUrl
+            }));
+
+            // Add info message
+            setMessages(prev => [...prev, {
+                id: prev.length + 1,
+                type: 'user',
+                text: "I've uploaded an image of the property."
+            }, {
+                id: prev.length + 2,
+                type: 'ai',
+                text: "Got it! I've updated the preview with your photo. It looks great!"
+            }]);
+
+            // Clear input
+            e.target.value = '';
+        }
     };
 
     const handleKeyPress = (e) => {
@@ -152,7 +193,7 @@ export default function AIListingPage() {
                     <div className={styles.chatHeader}>
                         <div className={styles.chatTitle}>
                             <i className="fas fa-sparkles"></i>
-                            Oikos AI
+                            Qilo AI
                         </div>
                         <div className={styles.chatSubtitle}>Building your listing in real-time...</div>
                     </div>
@@ -177,6 +218,20 @@ export default function AIListingPage() {
                     </div>
 
                     <div className={styles.inputArea}>
+                        <input
+                            type="file"
+                            ref={fileInputRef}
+                            className={styles.hiddenInput}
+                            accept="image/*"
+                            onChange={handleImageUpload}
+                        />
+                        <button
+                            className={styles.uploadButton}
+                            onClick={() => fileInputRef.current?.click()}
+                            title="Upload Image"
+                        >
+                            <i className="fas fa-image"></i>
+                        </button>
                         <input
                             type="text"
                             className={styles.input}
