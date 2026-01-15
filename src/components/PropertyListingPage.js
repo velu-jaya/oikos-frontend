@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import styles from './PropertyListingPage.module.css';
 import PropertyCard from './PropertyCard';
 import MapView from './MapView';
+import UpgradeModal from './UpgradeModal';
 import { getProperties } from '@/lib/api';
 // import sampleProperties from '@/data/properties'; // Keeping for reference or fallback if needed
 
@@ -14,6 +15,7 @@ export default function PropertyListingPage() {
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
   const [filters, setFilters] = useState({
     propertyType: 'all',
     minPrice: 0,
@@ -51,6 +53,9 @@ export default function PropertyListingPage() {
           baths: p.bathrooms,
           user_type: p.role // if needed
         }));
+
+        // Sort by ID descending (Newest first)
+        formattedData.sort((a, b) => b.id - a.id);
 
         setProperties(formattedData);
         setFilteredProperties(formattedData);
@@ -94,8 +99,20 @@ export default function PropertyListingPage() {
     }
   }, [searchTerm, filters, properties]);
 
-  const handlePropertySelect = (property) => {
+  const handlePropertySelect = (property, index) => {
+    // Check if property should be locked (index >= 4)
+    // Note: We need to check index in filtered list
+
+    // We'll handle lock logic in the render loop or wrapper
     setSelectedProperty(property);
+  };
+
+  const handleCardClick = (property, isLocked) => {
+    if (isLocked) {
+      setIsUpgradeModalOpen(true);
+    } else {
+      setSelectedProperty(property);
+    }
   };
 
   const handleFilterChange = (key, value) => {
@@ -254,18 +271,24 @@ export default function PropertyListingPage() {
 
             <div className={styles.propertyList}>
               {filteredProperties.length > 0 ? (
-                filteredProperties.map((property) => (
-                  <div
-                    key={property.id}
-                    className={`${styles.propertyItem} ${selectedProperty?.id === property.id
-                      ? styles.selected
-                      : ''
-                      }`}
-                    onClick={() => handlePropertySelect(property)}
-                  >
-                    <PropertyCard property={property} />
-                  </div>
-                ))
+                filteredProperties.map((property, index) => {
+                  const isLocked = index >= 4;
+                  return (
+                    <div
+                      key={property.id}
+                      className={`${styles.propertyItem} ${selectedProperty?.id === property.id
+                        ? styles.selected
+                        : ''
+                        }`}
+                      onClick={() => handleCardClick(property, isLocked)}
+                    >
+                      <PropertyCard
+                        property={property}
+                        isLocked={isLocked}
+                      />
+                    </div>
+                  );
+                })
               ) : (
                 <div className={styles.noResults}>
                   <p>No properties found matching your criteria.</p>
@@ -275,6 +298,7 @@ export default function PropertyListingPage() {
           </div>
         </div>
       </div>
-    </div>
+      <UpgradeModal isOpen={isUpgradeModalOpen} onClose={() => setIsUpgradeModalOpen(false)} />
+    </div >
   );
 }
