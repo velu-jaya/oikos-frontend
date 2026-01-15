@@ -89,10 +89,19 @@ export default function RegisterModal({ isOpen, onClose }) {
 
         if (error) throw error;
 
+        // Check for existing user (Supabase returns user with empty identities if exists and confirmation is active)
+        if (data.user && data.user.identities && data.user.identities.length === 0) {
+          throw new Error("This email is already registered. Please log in instead.");
+        }
+
         // If successful, move to success step (which asks user to check email)
         setCurrentStep(3);
       } catch (err) {
-        setError(err.message);
+        if (err.message.includes("User already registered") || err.message.includes("unique constraint")) {
+          setError("This email is already registered. Please log in instead.");
+        } else {
+          setError(err.message);
+        }
       } finally {
         setIsLoading(false);
       }

@@ -53,6 +53,12 @@ export function AuthProvider({ children }) {
     return await supabase.auth.signOut();
   };
 
+  const resetPassword = async (email) => {
+    return await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/update-password`,
+    });
+  };
+
   return (
     <AuthContext.Provider value={{
       user,
@@ -61,6 +67,7 @@ export function AuthProvider({ children }) {
       signUp,
       signIn,
       signOut,
+      resetPassword,
       loginModalOpen,
       setLoginModalOpen,
       registerModalOpen,
