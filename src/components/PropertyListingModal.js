@@ -53,6 +53,10 @@ export default function PropertyListingModal({ isOpen, onClose, isEditMode = fal
 
   const [selectedAmenities, setSelectedAmenities] = useState([]);
 
+  // Gallery State
+  // { id: string, type: 'url'|'file'|'existing', src: string (preview/url), file: File, isFeatured: boolean }
+  const [galleryItems, setGalleryItems] = useState([]);
+
   // Load data for edit mode
   useEffect(() => {
     if (isOpen && isEditMode && propertyToEdit) {
@@ -87,8 +91,25 @@ export default function PropertyListingModal({ isOpen, onClose, isEditMode = fal
       });
       setSelectedAmenities(propertyToEdit.amenities || []);
       setAddressValidated(true);
+
+      // Initialize Gallery
+      if (propertyToEdit.images && propertyToEdit.images.length > 0) {
+        const items = propertyToEdit.images.map((url, index) => ({
+          id: `existing-${index}`,
+          type: 'existing',
+          url: url,
+          src: url,
+          file: null,
+          isFeatured: index === 0 // Assume first is featured
+        }));
+        setGalleryItems(items);
+      } else {
+        setGalleryItems([]);
+      }
+
     } else if (isOpen && !isEditMode) {
       resetForm();
+      setGalleryItems([]);
     }
   }, [isOpen, isEditMode, propertyToEdit]);
 
@@ -133,6 +154,39 @@ export default function PropertyListingModal({ isOpen, onClose, isEditMode = fal
         ? prev.filter(a => a !== amenity)
         : [...prev, amenity]
     );
+  };
+
+  // Gallery Handlers
+  const handleFeaturedSet = (id) => {
+    setGalleryItems(prev => prev.map(item => ({
+      ...item,
+      isFeatured: item.id === id
+    })));
+  };
+
+  const handleRemoveImage = (id) => {
+    setGalleryItems(prev => prev.filter(item => item.id !== id));
+  };
+
+  const handleFileSelect = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const newFiles = Array.from(e.target.files);
+      const newItems = newFiles.map(file => ({
+        id: `new-${Date.now()}-${Math.random()}`,
+        type: 'file',
+        url: null,
+        src: URL.createObjectURL(file), // Create preview
+        file: file,
+        isFeatured: false
+      }));
+
+      setGalleryItems(prev => {
+        // If it's the first image ever, make it featured
+        const isFirst = prev.length === 0;
+        if (isFirst && newItems.length > 0) newItems[0].isFeatured = true;
+        return [...prev, ...newItems];
+      });
+    }
   };
 
   const validateAddress = async () => {
@@ -202,12 +256,66 @@ export default function PropertyListingModal({ isOpen, onClose, isEditMode = fal
       }
 
       // 2. Upload files to Supabase and get URLs
-      if (formData.images.length > 0) {
-        const uploadedUrls = await uploadImages(formData.images);
-        allImageUrls = [...allImageUrls, ...uploadedUrls];
-      } else if (isEditMode && propertyToEdit?.images && !formData.imageUrl) {
-        // Keep existing images if no new ones uploaded and no manual URL override
-        allImageUrls = propertyToEdit.images;
+      // First, handle all items in galleryItems
+
+      // Separate existing URLs and new items to upload
+      let finalImages = [];
+
+      // 1. Process existing URLs in galleryItems (excluding those that are new files)
+      const existingItems = galleryItems.filter(item => item.type === 'url' || (item.type === 'existing' && item.url));
+
+      // 2. Upload new files
+      const newFileItems = galleryItems.filter(item => item.type === 'file' && item.file);
+      const newFiles = newFileItems.map(item => item.file);
+
+      let uploadedUrls = [];
+      if (newFiles.length > 0) {
+        uploadedUrls = await uploadImages(newFiles);
+      }
+
+      // Map back uploaded URLs to their items to preserve order if possible, 
+      // but simpler to just collect all valid URLs.
+      // However, we need to respect the "Featured" selection.
+
+      // Let's reconstruct the list of all URLs (existing + newly uploaded)
+      // The issue is uploadImages returns a list of URLs, we need to know which one corresponds to which file to set 'featured' correctly if a new file was chosen as featured.
+      // For simplicity:
+      // If the featured item was a new file, we need to find its uploaded URL.
+      // Refactoring uploadImages to return map or index would be better, but let's stick to simple logic:
+
+      // Just collect all URLs first
+      const allUrls = [...existingItems.map(i => i.url), ...uploadedUrls];
+
+      // Now, which one is featured?
+      const featuredIndex = galleryItems.findIndex(item => item.isFeatured);
+
+      // If we simply concatenate, the index might shift.
+      // Let's do this:
+      // We will iterate through galleryItems. If it's a URL/existing, we take the URL.
+      // If it's a file, we take the NEXT available URL from uploadedUrls.
+
+      let uploadPtr = 0;
+      const orderedUrls = [];
+      let featuredUrl = null;
+
+      for (const item of galleryItems) {
+        if (item.type === 'url' || item.type === 'existing') {
+          orderedUrls.push(item.url);
+          if (item.isFeatured) featuredUrl = item.url;
+        } else if (item.type === 'file') {
+          if (uploadPtr < uploadedUrls.length) {
+            const url = uploadedUrls[uploadPtr++];
+            orderedUrls.push(url);
+            if (item.isFeatured) featuredUrl = url;
+          }
+        }
+      }
+
+      // Ensure featured URL is first
+      if (featuredUrl) {
+        allImageUrls = [featuredUrl, ...orderedUrls.filter(u => u !== featuredUrl)];
+      } else {
+        allImageUrls = orderedUrls;
       }
 
       // Prepare data for backend
@@ -745,17 +853,57 @@ export default function PropertyListingModal({ isOpen, onClose, isEditMode = fal
                     <h3>Images</h3>
                   </div>
                   <div className={styles.formGroup}>
-                    <label>Upload Images (Local Only)</label>
-                    <input
-                      type="file"
-                      multiple
-                      accept="image/*"
-                      onChange={(e) => {
-                        const files = Array.from(e.target.files);
-                        setFormData(prev => ({ ...prev, images: [...prev.images, ...files] }));
-                      }}
-                    />
-                    {formData.images.length > 0 && <p>{formData.images.length} images selected</p>}
+                    <label>Property Images</label>
+                    <p className={styles.subLabel}>Upload images. Select the star to mark as featured.</p>
+
+                    <div className={styles.uploadArea} onClick={() => document.getElementById('gallery-upload').click()}>
+                      <div className={styles.uploadIcon}>
+                        <i className="fas fa-cloud-upload-alt"></i>
+                      </div>
+                      <div className={styles.uploadText}>
+                        Click to upload images
+                      </div>
+                      <input
+                        id="gallery-upload"
+                        type="file"
+                        multiple
+                        accept="image/*"
+                        onChange={handleFileSelect}
+                        style={{ display: 'none' }}
+                      />
+                    </div>
+
+                    {galleryItems.length > 0 && (
+                      <div className={styles.galleryGrid}>
+                        {galleryItems.map(item => (
+                          <div key={item.id} className={`${styles.galleryItem} ${item.isFeatured ? styles.featured : ''}`}>
+                            <img src={item.src} alt="Property" className={styles.thumbnail} />
+
+                            <button
+                              type="button"
+                              className={styles.removeButton}
+                              onClick={() => handleRemoveImage(item.id)}
+                              title="Remove image"
+                            >
+                              <i className="fas fa-times"></i>
+                            </button>
+
+                            {item.isFeatured ? (
+                              <div className={styles.featuredBadge}>Featured</div>
+                            ) : (
+                              <button
+                                type="button"
+                                className={styles.setFeaturedButton}
+                                onClick={() => handleFeaturedSet(item.id)}
+                                title="Set as featured"
+                              >
+                                <i className="far fa-star"></i> Featured
+                              </button>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   <div className={styles.buttonGroup}>
