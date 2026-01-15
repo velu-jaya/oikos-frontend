@@ -29,8 +29,8 @@ export default function SellerPage() {
     // RegisterModal saves it as 'user_type' in metadata
     const userRole = user.user_metadata?.user_type || user.user_metadata?.role || user.role;
 
-    if (userRole !== 'seller') {
-      alert("Access Restricted: Only registered Sellers can list properties.\n\nPlease sign out and create a Seller account.");
+    if (userRole !== 'seller' && userRole !== 'expert') {
+      alert("Access Restricted: Only registered Sellers or Experts can list properties.\n\nPlease sign out and create an eligible account.");
       return;
     }
 

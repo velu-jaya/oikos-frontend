@@ -27,8 +27,8 @@ export default function AIListingPage() {
             }
 
             const userRole = user.user_metadata?.user_type || user.user_metadata?.role || user.role;
-            if (userRole !== 'seller') {
-                alert("Access Restricted: Only registered Sellers can use the AI Listing Assistant.");
+            if (userRole !== 'seller' && userRole !== 'expert') {
+                alert("Access Restricted: Only registered Sellers or Experts can use the AI Listing Assistant.");
                 router.push('/');
             }
         }
