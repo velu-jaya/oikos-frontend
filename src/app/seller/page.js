@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -9,6 +10,7 @@ import styles from './page.module.css';
 
 export default function SellerPage() {
   const { user, setLoginModalOpen } = useAuth();
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeAccordion, setActiveAccordion] = useState(null);
 
@@ -33,6 +35,10 @@ export default function SellerPage() {
     }
 
     setIsModalOpen(true);
+  };
+
+  const handleAIListing = () => {
+    router.push('/seller/ai-listing');
   };
 
   const toggleAccordion = (index) => {
@@ -185,9 +191,15 @@ export default function SellerPage() {
               <p className={styles.heroDescription}>
                 List your property and connect with genuine buyers faster. Our platform helps you showcase your property, manage enquiries, and close deals smoothly.
               </p>
-              <button className={styles.ctaButton} onClick={handleStartListing}>
-                Start Listing Now
-              </button>
+              <div className={styles.ctaButtons}>
+                <button className={styles.ctaButton} onClick={handleStartListing}>
+                  Start Listing Now
+                </button>
+                <button className={styles.aiButton} onClick={handleAIListing}>
+                  <i className="fas fa-wand-magic-sparkles"></i>
+                  List with help of AI
+                </button>
+              </div>
             </div>
           </div>
         </section>

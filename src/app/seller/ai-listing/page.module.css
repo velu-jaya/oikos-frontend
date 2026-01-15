@@ -1,0 +1,365 @@
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.splitLayout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    /* Use min-height: 0 to allow flex items to shrink/scroll */
+    min-height: 0;
+}
+
+/* Left Panel: AI Chat */
+.chatPanel {
+    width: 35%;
+    min-width: 400px;
+    background-color: var(--surface);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 10;
+    /* Ensure chat panel also respects height */
+    height: 100%;
+}
+
+
+.chatHeader {
+    padding: 1.5rem;
+    background: var(--surface);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.chatTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.chatSubtitle {
+    color: #6b7280;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+.messagesArea {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.message {
+    max-width: 85%;
+    padding: 1rem;
+    border-radius: 12px;
+    line-height: 1.5;
+    font-size: 0.95rem;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.aiMessage {
+    align-self: flex-start;
+    background-color: #f3f4f6;
+    color: #1f2937;
+    border-bottom-left-radius: 2px;
+    border: 1px solid #e5e7eb;
+}
+
+.userMessage {
+    align-self: flex-end;
+    background-color: var(--primary);
+    color: white;
+    border-bottom-right-radius: 2px;
+    box-shadow: 0 2px 4px rgba(84, 144, 128, 0.2);
+}
+
+.inputArea {
+    padding: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    background: white;
+    display: flex;
+    gap: 0.8rem;
+}
+
+.input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.2s;
+    background: #f9fafb;
+}
+
+.input:focus {
+    border-color: var(--primary);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(84, 144, 128, 0.1);
+}
+
+.sendButton {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.sendButton:hover {
+    background: #3d7062;
+    /* Darker shade of primary */
+    transform: translateY(-1px);
+}
+
+/* Right Panel: Live Preview */
+.previewPanel {
+    flex: 1;
+    background-color: var(--background);
+    padding: 2rem;
+    overflow-y: auto;
+    position: relative;
+}
+
+.previewBadge {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    background: var(--accent);
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(250, 156, 70, 0.3);
+    z-index: 5;
+    animation: pulse 2s infinite;
+}
+
+.listingCard {
+    background: white;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    transition: all 0.5s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 0.6s ease-out forwards;
+}
+
+/* Simulated Image Area */
+.imagePlaceholder {
+    height: 400px;
+    background: #e5e7eb;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.placeholderContent {
+    text-align: center;
+    color: #9ca3af;
+}
+
+.placeholderContent i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.listingImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: fadeIn 1s ease;
+}
+
+.cardContent {
+    padding: 2rem;
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #f3f4f6;
+    padding-bottom: 1.5rem;
+}
+
+.price {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.address {
+    font-size: 1.2rem;
+    color: #374151;
+    margin: 0;
+    font-weight: 500;
+}
+
+.statusTag {
+    background: #dcfce7;
+    color: #166534;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.statItem {
+    text-align: center;
+    padding: 1rem;
+    background: #f9fafb;
+    border-radius: 8px;
+}
+
+.statValue {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.statLabel {
+    color: #6b7280;
+    font-size: 0.85rem;
+}
+
+.descriptionSection h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.8rem;
+}
+
+.description {
+    color: #4b5563;
+    line-height: 1.7;
+    white-space: pre-wrap;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(250, 156, 70, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(250, 156, 70, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(250, 156, 70, 0);
+    }
+}
+
+.typingIndicator {
+    display: flex;
+    gap: 4px;
+    padding: 1rem;
+    background-color: #f3f4f6;
+    border-radius: 12px;
+    width: fit-content;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    background-color: #9ca3af;
+    border-radius: 50%;
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.dot:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.dot:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+
+    0%,
+    80%,
+    100% {
+        transform: scale(0);
+    }
+
+    40% {
+        transform: scale(1);
+    }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .splitLayout {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .chatPanel,
+    .previewPanel {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .chatPanel {
+        height: 50vh;
+    }
+
+    .previewPanel {
+        min-height: 100vh;
+    }
+}
