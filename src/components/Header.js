@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import styles from "../app/page.module.css";
 import { useAuth } from "../context/AuthContext";
@@ -21,7 +20,7 @@ export default function Header() {
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
       <div className={styles.brand}>
-        <a href="/"><Image src="/logo-small.png" width={120} height={50} alt="Qilo" /></a>
+        <a href="/"><img src="/qilo.svg" width="100" height="50" alt="Qilo" /></a>
       </div>
       <nav className={styles.nav}>
         <ul>

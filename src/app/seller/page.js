@@ -193,6 +193,7 @@ export default function SellerPage() {
               </p>
               <div className={styles.ctaButtons}>
                 <button className={styles.ctaButton} onClick={handleStartListing}>
+                  <i className="fas fa-list"></i>
                   Start Listing Now
                 </button>
                 <button className={styles.aiButton} onClick={handleAIListing}>

@@ -188,36 +188,49 @@ a.secondary {
 }
 
 .login {
-  padding: 8px 12px;
+  background-color: #fff;
   color: var(--primary);
-  border: 2px solid var(--primary);
-  background: transparent;
-  border-radius: 8px;
-  font-weight: 500;
+  border: none;
+  padding: 0.8rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 50px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 .login:hover {
-  background: rgba(84, 144, 128, 0.08);
-  color: var(--primary);
-  border-color: var(--primary);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  background-color: var(--accent);
+  color: white;
 }
 
 .register {
-  padding: 8px 14px;
-  background: var(--primary);
-  color: #fff;
-  border-radius: 8px;
-  font-weight: 500;
+  background-color: #fff;
+  color: var(--primary);
+  border: none;
+  padding: 0.8rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 50px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 .register:hover {
-  background: #4a7a6f;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(84, 144, 128, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  background-color: var(--accent);
+  color: white;
 }
 
 /* Hero */
