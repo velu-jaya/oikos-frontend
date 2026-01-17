@@ -883,3 +883,40 @@ i.fas {
     font-size: 16px;
   }
 }
+
+/* Login Button for Guest Users */
+.loginButton {
+  background-color: #549080;
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.loginButton:hover {
+  background-color: #4a7a6f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(84, 144, 128, 0.2);
+}
+
+/* Login Message for Guest Users */
+.loginMessage {
+  background-color: #f0f4f8;
+  border: 1px solid #d0dce6;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  color: #549080;
+  font-weight: 500;
+  margin-top: 12px;
+}

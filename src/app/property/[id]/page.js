@@ -7,9 +7,11 @@ import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import styles from './page.module.css';
 import { getProperty } from '@/lib/api';
+import { useAuth } from '@/context/AuthContext';
 
 export default function PropertyDetailsPage({ params }) {
   const { id } = use(params);
+  const { user, setLoginModalOpen } = useAuth();
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState('');
@@ -263,12 +265,20 @@ export default function PropertyDetailsPage({ params }) {
                 </div>
               </div>
 
-              <button className={styles.btnPrimary} onClick={() => window.location.href = `tel:${property.contact_phone}`}>
-                <i className="fas fa-phone"></i> {property.contact_phone || "Call Seller"}
-              </button>
-              <button className={styles.btnSecondary} onClick={() => window.location.href = `mailto:${property.contact_email}`}>
-                <i className="fas fa-envelope"></i> Email: {property.contact_email || "N/A"}
-              </button>
+              {user ? (
+                <>
+                  <button className={styles.btnPrimary} onClick={() => window.location.href = `tel:${property.contact_phone}`}>
+                    <i className="fas fa-phone"></i> {property.contact_phone || "Call Seller"}
+                  </button>
+                  <button className={styles.btnSecondary} onClick={() => window.location.href = `mailto:${property.contact_email}`}>
+                    <i className="fas fa-envelope"></i> Email: {property.contact_email || "N/A"}
+                  </button>
+                </>
+              ) : (
+                <button className={styles.loginButton} onClick={() => setLoginModalOpen(true)}>
+                  <i className="fas fa-lock"></i> Login to View Contact Details
+                </button>
+              )}
             </div>
 
             {/* Schedule Tour Card */}

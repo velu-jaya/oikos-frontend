@@ -41,6 +41,7 @@ export default function Footer() {
             <li><a href="/about">About Us</a></li>
             <li><a href="/properties">Properties</a></li>
             <li><a href="/vendors">Vendors</a></li>
+             <li><a href="/blog">Blog</a></li>
             <li><a href="/contact">Contact</a></li>
             <li><a href="/terms-and-policy">Terms & Policy</a></li>
           </ul>

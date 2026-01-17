@@ -24,12 +24,10 @@ export default function Header() {
       </div>
       <nav className={styles.nav}>
         <ul>
-          <li><a href="/buyer">Buyer</a></li>
-          <li><a href="/seller">Seller</a></li>
-          <li><a href="/agent">Real Estate Expert</a></li>
-          <li><a href="/vendor">Vendor</a></li>
-
-          <li><a href="/blog">Blog</a></li>
+          <li><a href="/buyer">For Buyer</a></li>
+          <li><a href="/seller">For Seller</a></li>
+          <li><a href="/agent">For Real Estate Expert</a></li>
+          <li><a href="/vendor">For Vendor</a></li>
         </ul>
       </nav>
       <div className={styles.actions}>
